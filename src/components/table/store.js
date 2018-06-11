@@ -2,6 +2,7 @@
 
 export default class Store {
   states = {
+    table: null,
     key: 1,
     data: [],
     config: [],
@@ -13,14 +14,35 @@ export default class Store {
       states.config = config
     },
 
+    initTable(states, ref) {
+      states.table = ref
+    },
+
     changeData(states, data) {
       states.data = data
     }
   }
 
+  get fixed() {
+    return this.config.fixed
+  }
+
+  get data() {
+    return this.states.data
+  }
+
+  get tableWidth() {
+    return this.config.tableWidth
+  }
+
   get config() {
+    // getTableWidth(this.states.table)
     const { config } = this.states
-    return makeLineStack(config)
+    return makeLineStack(config, this.states)
+  }
+
+  get colGroup() {
+    return this.config.colGroup
   }
 
   get head() {
@@ -28,6 +50,10 @@ export default class Store {
   }
 
   get body() {
+    return this.config.body
+  }
+
+  get col() {
     return this.config.body
   }
 
@@ -45,11 +71,17 @@ export default class Store {
  * tree => line 计算递归深度
  * @param {object} config
  */
-const makeLineStack = function(config) {
-  let result = []
+const makeLineStack = function(config, { table }) {
+  let wrapperWidth = getTableWidth(table)
+  let head = []
   let body = []
+  let colGroup = []
   // 当前递归深度
   let line = 0
+  let widthCount = 0
+  let hasWidth = 0
+  let fixed = { left: [], right: [] }
+
   /**
    * 递归处理table-tree
    * @param {*} val
@@ -64,18 +96,20 @@ const makeLineStack = function(config) {
 
     if (val.children) {
       line++
-      if (root) root.count += val.children.length
+      if (root) root.count += val.children.length - 1
       val.children.forEach((v, index) => makeChild(v, index, path, val))
       line--
+    } else {
+      if (val.width) {
+        widthCount += val.width
+        hasWidth++
+      }
+      body.push({ ...val, path })
     }
 
-    result[line] = result[line] || []
+    head[line] = head[line] || []
 
-    result[line].push({
-      ...val,
-      path,
-      line
-    })
+    head[line].push({ ...val, path, line })
   }
 
   config.forEach((val, index) => {
@@ -83,18 +117,43 @@ const makeLineStack = function(config) {
   })
 
   // 跨行计算
-  const rows = result.length
-  result.forEach((val, index) =>
+  const rows = head.length
+  head.forEach((val, index) =>
     val.forEach(v => {
-      body.push(v)
       v.row = !v.children ? rows - index : 1
     })
   )
 
+  // 自适应表格处理
+  body.forEach((val, index) => {
+    let defaultWidth = (wrapperWidth - widthCount) / (body.length - hasWidth)
+    let width = val.width || (defaultWidth < 80 ? 80 : defaultWidth)
+
+    if (val.fixed && !val.children) {
+      fixed[val.fixed].push({ index, width })
+    }
+
+    colGroup.push({
+      width: width
+    })
+  })
+
+  fixed.left = fixed.left.reduce((accu, curr) => accu + curr.width, 0)
+  fixed.right = fixed.right.reduce((accu, curr) => accu + curr.width, 0)
+
+  const tableColWidth = colGroup.reduce((accu, curr) => accu + curr.width, 0)
+  const tableWidth = tableColWidth < wrapperWidth ? wrapperWidth : tableColWidth
   return {
-    rows: rows,
-    cols: result[0].reduce((accu, curr) => accu + curr.count, 0),
-    result,
-    body
+    rows,
+    cols: head[0].reduce((accu, curr) => accu + curr.count, 0),
+    result: head,
+    tableWidth: tableWidth,
+    body,
+    fixed,
+    colGroup
   }
+}
+
+function getTableWidth(tabelDom) {
+  return tabelDom.$el.offsetWidth || 0
 }

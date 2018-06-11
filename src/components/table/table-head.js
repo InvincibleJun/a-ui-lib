@@ -6,11 +6,12 @@ export default {
   },
 
   render(h) {
-    const { head } = this.store
-    const { body } = this.store
-    console.log(body)
+    const { head, colGroup, tableWidth } = this.store
+
     return (
-      <table>
+      <table style={`width: ${tableWidth}px`}>
+        <colgroup>{colGroup.map(val => <col width={val.width} />)}</colgroup>
+
         <thead>
           {head.map(row => (
             <tr>

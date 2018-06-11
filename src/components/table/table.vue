@@ -1,9 +1,21 @@
 <template>
-  <div>
-    <slot></slot>
-    <table-head :store="store"></table-head>
-    <table-body :store="store"></table-body>
-    <table-footer></table-footer>
+  <div ref="table" style="width: 800px" class="c-table-wrapper">
+    <!-- <slot></slot> -->
+    <div v-if="ready" class="c-table-main-wrapper">
+      <table-head :store="store"></table-head>
+      <table-body :store="store" :stripe="stripe"></table-body>
+      <!-- <table-footer></table-footer> -->
+    </div>
+
+    <div v-if="ready && store.fixed.left" :style="`width: ${store.fixed.left}px`" class="c-table-fixed-left">
+      <table-head :store="store"></table-head>
+      <table-body :store="store" :stripe="stripe"></table-body>
+    </div>
+
+    <div v-if="ready && store.fixed.right" :style="`width: ${store.fixed.right}px`" class="c-table-fixed-right">
+      <table-head :store="store"></table-head>
+      <table-body :store="store" :stripe="stripe"></table-body>
+    </div>
   </div>
 </template>
 
@@ -21,7 +33,8 @@ export default {
   data() {
     const store = new Store();
     return {
-      store
+      store,
+      ready: false
     }
   },
 
@@ -35,6 +48,10 @@ export default {
     data: {
       type: Array
     }, 
+    stripe: {
+      type: Boolean,
+      default: false
+    },
     config: {
       type: Array,
       default: () => {
@@ -53,6 +70,11 @@ export default {
 
   created() {
     this.tableId = ++tableId;
+  },
+
+  mounted(){
+    this.store.commit('initTable', this)
+    this.ready = true
   },
 
 
@@ -74,10 +96,27 @@ export default {
 </script>
 
 <style>
-th {
-  border: 1px solid black;
+.c-table-wrapper {
+  position: relative;
 }
-table {
-  width: 800px;
+
+.c-table-main-wrapper {
+  overflow: auto;
+}
+
+.c-table-fixed-left {
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+.c-table-fixed-right {
+  overflow: hidden;
+  right: 0;
+  top: 0;
+  left: auto;
+  position: absolute;
 }
 </style>
+
+

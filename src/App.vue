@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <c-tabel :data="data" :config="config"></c-tabel>
+    <c-tabel :data="data" :stripe="true" :config="config"></c-tabel>
   </div>
 </template>
 
@@ -19,68 +19,105 @@ export default {
     return {
       config: [
         {
-          title: '姓名',
-          // key: 'name',
+          title: '操作',
+          width: 100,
+          fixed: 'left',          
+          render: (h, params) => {
+            // console.log(params)
+            return h('div', null, '213')
+          }
+        },
+        {
+          title: '时间',
+          fixed: 'left',          
+          width: 100,
+          key: 'date',
+        },
+        {
+          title: '配送时间',
           children: [
+            {    
+              key: 'name',
+              title: '姓名',
+              width: 100              
+            },
             {
-              key: 'age',
-              title: '年龄',
+              title: '地址',
               children: [
                 {
-                  title: 'a',
-                  key: 'a'
+                  key: 'province',
+                  title: '省份'
+                },
+                {
+                  key: 'city',
+                  title: '市区',
+                  width: 200
+                },
+                {
+                  key: 'address',
+                  title: '地址',
+                  width: 300                 
                 }
               ]
-            },
-            {
-              key: 'isBoy',
-              title: '是否男'
-            },
-
-            {
-              key: 'isBoy',
-              title: '是否男'
             }
           ]
         },
         {
-          title: 'id',
-          key: 'id'
-        },
-        {
-          title: '性别',
-          key: 'sex'
+          title: '做',
+          key: '',
+          fixed: 'right'
         }
       ],
-      data: [
-        {
-          id: 1,
-          name: 1,
-          sex: 1,
-        },
-        {
-          id: 2,
-          name: 2,
-          sex: 2,          
-        },
-        {
-          id: 3,
-          name: 3,
-          sex: 1,          
-          
-        },
-        {
-          id: 4,
-          name: 4,
-          sex: 2,                    
-        }
-      ],
-      show: false,
-      s: false,
-      a: false,
-      b: false,
-      c: false,
-      d: false
+      data: [{
+          date: '2016-05-03',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-08',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-06',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }]
     }
   }
 }
@@ -95,4 +132,57 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.even {
+  background-color: #fff;
+}
+
+.odd {
+  background-color: #ccc;
+}
+/*table start*/
+.default-table {
+  /* -moz-border-radius: 5px;  
+    -webkit-border-radius:5px;  
+    border-radius:5px; */
+  width: 100%;
+  border: solid #333;
+  border-width: 1px 0px 0px 1px;
+  font-size: #333;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.default-table tbody tr {
+  height: 20px;
+  line-height: 20px;
+}
+.default-table tbody tr.odd {
+  background-color: #fff;
+}
+.default-table tbody tr.even {
+  background-color: #f5f5f5;
+}
+.default-table tbody tr:hover {
+  background-color: #eee;
+}
+.default-table tbody tr th,
+.default-table tbody tr td {
+  padding: 3px 5px;
+  text-align: left;
+  /* border: 1px solid #ddd; */
+  border: solid #333;
+  border-width: 0px 1px 1px 0px;
+}
+.default-table tbody tr th {
+  font-weight: bold;
+  text-align: center;
+}
+
+.default-table tbody tr td.tac {
+  text-align: center;
+}
+.default-table tbody tr td a:hover {
+  color: #0080c0;
+}
+/*table end*/
 </style>
