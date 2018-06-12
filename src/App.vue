@@ -1,136 +1,62 @@
 <template>
   <div id="app">
-    <c-tabel :data="data" :stripe="true" :config="config"></c-tabel>
+    <c-progress :percentage="50"></c-progress>
   </div>
 </template>
 
 <script>
 import Modal from './components/modal'
-import CTabel from './components/table'
-import CTabelColumn from './components/table-column'
+import CProgress from './components/progress'
+// import CTabelColumn from './components/table-column'
 
 export default {
   name: 'App',
   components: {
-    CTabel,
-    CTabelColumn
-  },
-  data () {
-    return {
-      config: [
-        {
-          title: '操作',
-          width: 100,
-          fixed: 'left',          
-          render: (h, params) => {
-            // console.log(params)
-            return h('div', null, '213')
-          }
-        },
-        {
-          title: '时间',
-          fixed: 'left',          
-          width: 100,
-          key: 'date',
-        },
-        {
-          title: '配送时间',
-          children: [
-            {    
-              key: 'name',
-              title: '姓名',
-              width: 100              
-            },
-            {
-              title: '地址',
-              children: [
-                {
-                  key: 'province',
-                  title: '省份'
-                },
-                {
-                  key: 'city',
-                  title: '市区',
-                  width: 200
-                },
-                {
-                  key: 'address',
-                  title: '地址',
-                  width: 300                 
-                }
-              ]
-            }
-          ]
-        },
-        {
-          title: '做',
-          key: '',
-          fixed: 'right'
-        }
-      ],
-      data: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }]
-    }
+    // CTabel,
+    CProgress
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+div {
+  box-sizing: border-box;
+}
+
+.c-progress-line-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.c-progress-line-percentage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #67c23a;
+  height: 100%;
+}
+
+.c-progress-line-not-inside {
+  margin-right: -55px;
+  padding-right: 50px;
+  display: inline-block;
+}
+
+.c-progress-line-bar {
+  width: 100%;
+  background-color: #ebeef5;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  height: 20px;
+}
+
+.c-progress-text {
+  margin-left: 5px;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .even {

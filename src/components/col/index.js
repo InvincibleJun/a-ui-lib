@@ -8,7 +8,7 @@ export default {
 
   methods: {
     getStyle() {
-      let style = this.$parent..getStyle()
+      // let style = this.$parent.getStyle()
     }
   },
 
