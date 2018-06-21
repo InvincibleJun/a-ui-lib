@@ -1,5 +1,5 @@
 <template>
-  <div @click="open" @mouseleave="hide" @mouseenter="clearTimer" @keydown="keydown">
+  <div @click="open" @mouseleave="hide" @mouseenter="clearTimer" @keyup="keyup" class="c-dropdown" tabindex="0">
     <slot></slot>
     <transition name="modal-fade">
       <ul class="c-dropdown-menu">
@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       timer: null,
-      show: false
+      show: false,
+      active: -1
     }
   },
 
@@ -25,7 +26,7 @@ export default {
     trigger: String,
     timeout: {
       type: Number,
-      default: 2000
+      default: 500
     }
   },
   methods: {
@@ -38,8 +39,13 @@ export default {
     clearTimer() {
       clearTimeout(timer)
     },
-    keydown() {
-      debugger
+    keyup(e) {
+        if (this.active === -1)
+
+if (e.keyCode === 38) {
+      } else if (e.keyCode === 40){
+
+      }
     },
     open() {
       this.show = true
