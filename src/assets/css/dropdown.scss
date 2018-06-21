@@ -1,0 +1,57 @@
+.c-dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 10px 0;
+  margin: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.c-dropdown-item {
+  list-style: none;
+  line-height: 36px;
+  padding: 0 20px;
+  margin: 0;
+  font-size: 14px;
+  color: #606266;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.modal-fade-enter,
+.modal-fade-enter-active {
+  animation: ModalShow 0.3s;
+}
+
+.modal-fade-leave-to {
+  animation: ModalLeave 0.5s;
+}
+
+@keyframes ModalShow {
+  from {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes ModalLeave {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+}

@@ -31,7 +31,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$slots)
     let column = {}
 
     column.config = {

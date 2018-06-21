@@ -13,16 +13,16 @@ export default {
         classList.concat([
           'c-row-flex',
           `c-row-justify-${this.justify}`,
-          `align-items-${this.align}`
+          `c-align-items-${this.align}`
         ])
       }
+      return classList.join(' ')
     },
 
     getStyle() {
       let styleObj = {}
       if (this.gutter) {
-        let marginLeft, marginRight
-        marginLeft = marginRight = -this.gutter / 2 + 'px'
+        styleObj.marginLeft = styleObj.marginRight = -this.gutter / 2 + 'px'
       }
       return styleObj
     }

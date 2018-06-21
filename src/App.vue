@@ -1,24 +1,40 @@
 <template>
   <div id="app">
-    <c-progress :percentage="50"></c-progress>
+    <c-dropdown>
+      <div>打开</div>
+      <template slot='menu'>
+        <c-dropdown-item>chenjun</c-dropdown-item>
+        <c-dropdown-item>chenjun</c-dropdown-item>
+        <c-dropdown-item>chenjun</c-dropdown-item>
+        <c-dropdown-item>chenjun</c-dropdown-item>
+      </template>
+    </c-dropdown>
   </div>
 </template>
 
 <script>
-import Modal from './components/modal'
-import CProgress from './components/progress'
-// import CTabelColumn from './components/table-column'
+import CDropdown from './components/dropdown/index'
+import CDropdownItem from './components/dropdown/dropdown-item' 
+import CButton from './components/button'
 
 export default {
   name: 'App',
   components: {
-    // CTabel,
-    CProgress
+    CButton,
+    CDropdown,
+    CDropdownItem
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+body {
+  margin: 0;
+}
+
+@import '@/assets/css/dropdown.scss';
+@import '@/assets/css/button.scss';
+
 div {
   box-sizing: border-box;
 }
@@ -111,4 +127,79 @@ div {
   color: #0080c0;
 }
 /*table end*/
+
+.c-row {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c-row-flex {
+  display: flex;
+}
+
+$justify: flex-start flex-end center space-around space-between;
+@each $i in $justify {
+  .c-row-justify-#{$i} {
+    justify-content: $i;
+  }
+}
+
+$align: center flex-start flex-end;
+@each $i in $align {
+  .c-row-align-#{$i} {
+    align-items: $i;
+  }
+}
+
+.c-row:before,
+.c-row:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+@for $i from 1 through 24 {
+  .c-col-#{$i} {
+    width: $i / 24 * 100%;
+  }
+}
+
+.c-col {
+  float: left;
+  box-sizing: border-box;
+}
+
+@for $i from 1 through 24 {
+  .c-col-offset-#{$i} {
+    margin-left: $i / 24 * 100%;
+  }
+}
+
+$size: (
+  xs: 768px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xl: 1920px
+);
+
+@each $s, $v in $size {
+  @if $s == xs {
+    @media only screen and (max-width: $v) {
+      @for $i from 1 through 24 {
+        .c-col-#{$s}-#{$i} {
+          width: $i / 24 * 100%;
+        }
+      }
+    }
+  } @else {
+    @media only screen and (min-width: $v) {
+      @for $i from 1 through 24 {
+        .c-col-#{$s}-#{$i} {
+          width: $i / 24 * 100%;
+        }
+      }
+    }
+  }
+}
 </style>
