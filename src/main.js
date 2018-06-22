@@ -10,6 +10,8 @@ import Dialog from 'element-ui/packages/dialog'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/index.css'
 
+import './assets/icon/iconfont.css'
+
 Vue.use(ElementUI)
 Vue.use(Dialog)
 Vue.config.productionTip = false

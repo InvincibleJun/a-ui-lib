@@ -1,0 +1,79 @@
+$active: rgb(64, 158, 255);
+
+.c-datepicker-top {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ebeef5;
+  i:hover {
+    color: $active;
+  }
+}
+
+.c-datapicker-wrapper {
+  width: 292px;
+
+  table {
+    margin: 10px 0;
+    padding: 0 10px;
+    width: 100%;
+  }
+
+  td {
+    font-size: 12px;
+  }
+
+  td:hover {
+    color: $active;
+    cursor: pointer;
+  }
+
+  span:hover {
+    color: $active;
+    cursor: pointer;
+  }
+
+  color: #606266;
+  border: 1px solid #e4e7ed;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 4px;
+  line-height: 30px;
+  margin: 5px 0;
+}
+
+.c-datepicker-mid {
+  td {
+    width: 32px;
+    height: 30px;
+    padding: 4px 0;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+  }
+}
+
+.c-datapicker-is-active {
+  color: $active;
+}
+
+.c-datapicker-is-now {
+  color: $active;
+  font-weight: bold;
+}
+
+.c-datepicker-no-current-month {
+  color: #ccc;
+}
+
+.c-left {
+  float: left;
+}
+
+.c-right {
+  float: right;
+}
+
+.c-datepicker-top-label {
+  margin: 0 6px;
+}

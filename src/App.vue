@@ -1,28 +1,21 @@
 <template>
   <div id="app">
-    <c-dropdown>
-      <div>打开</div>
-      <template slot='menu'>
-        <c-dropdown-item>chenjun</c-dropdown-item>
-        <c-dropdown-item>chenjun</c-dropdown-item>
-        <c-dropdown-item>chenjun</c-dropdown-item>
-        <c-dropdown-item>chenjun</c-dropdown-item>
-      </template>
-    </c-dropdown>
+    <c-datepicker v-model="value" />
   </div>
 </template>
 
 <script>
-import CDropdown from './components/dropdown/index'
-import CDropdownItem from './components/dropdown/dropdown-item' 
-import CButton from './components/button'
+import CDatepicker from './components/datepicker'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      value: '123'
+    }
+  },
   components: {
-    CButton,
-    CDropdown,
-    CDropdownItem
+    CDatepicker,
   }
 }
 </script>
@@ -34,6 +27,7 @@ body {
 
 @import '@/assets/css/dropdown.scss';
 @import '@/assets/css/button.scss';
+@import '@/assets/css/datepicker.scss';
 
 div {
   box-sizing: border-box;

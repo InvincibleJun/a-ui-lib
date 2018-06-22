@@ -40,9 +40,9 @@ export default {
       clearTimeout(timer)
     },
     keyup(e) {
-        if (this.active === -1)
+      if (this.active === -1) {}
 
-if (e.keyCode === 38) {
+      if (e.keyCode === 38) {
       } else if (e.keyCode === 40){
 
       }
