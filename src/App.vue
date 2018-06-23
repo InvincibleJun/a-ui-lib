@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <c-datepicker v-model="value" />
+    <c-colorpicker v-model="value" :show-alpha="true" />
   </div>
 </template>
 
 <script>
-import CDatepicker from './components/datepicker'
+import CColorpicker from './components/colorpicker'
 
 export default {
   name: 'App',
   data() {
     return {
-      value: '123'
+      value: 'rgba(36, 46, 109, 0.5)'
     }
   },
   components: {
-    CDatepicker,
+    CColorpicker,
   }
 }
 </script>
