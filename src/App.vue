@@ -1,12 +1,30 @@
 <template>
   <div id="app">
-    <c-colorpicker v-model="value" :show-alpha="true" />
+    <c-carousel :width="400" :height="300">
+      <c-carousel-item>
+        <div class="item">1</div>
+      </c-carousel-item>
+      <c-carousel-item>
+        <div class="item">2</div>
+      </c-carousel-item>
+      <c-carousel-item>
+        <div class="item">3</div>
+      </c-carousel-item>
+      <c-carousel-item>
+        <div class="item">4</div>
+      </c-carousel-item>
+      <c-carousel-item>
+        <div class="item">5</div>
+      </c-carousel-item>
+    </c-carousel>
+    <!-- <Test></Test> -->
   </div>
 </template>
 
 <script>
-import CColorpicker from './components/colorpicker'
-
+import CCarousel from './components/carousel'
+import CCarouselItem from './components/carousel/item'
+import Test from './test'
 export default {
   name: 'App',
   data() {
@@ -15,7 +33,9 @@ export default {
     }
   },
   components: {
-    CColorpicker,
+    Test,
+    CCarousel,
+    CCarouselItem
   }
 }
 </script>
@@ -25,9 +45,23 @@ body {
   margin: 0;
 }
 
+.item {
+  text-align: center;
+  width: 100%;
+  height: 300px;
+  line-height: 300px;
+  background-color: #ccc;
+}
+
+#app {
+  // width: 200px;
+  // height: 150px;
+}
+
 @import '@/assets/css/dropdown.scss';
 @import '@/assets/css/button.scss';
 @import '@/assets/css/datepicker.scss';
+@import '@/assets/css/carousel.scss';
 
 div {
   box-sizing: border-box;

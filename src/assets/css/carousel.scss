@@ -1,0 +1,89 @@
+.c-carousel-item {
+  position: absolute;
+  width: 200px;
+  height: 150px;
+  top: 0;
+  left: 0;
+}
+
+.c-carousel-container {
+  position: relative;
+  height: 150px;
+  width: 200px;
+  overflow: hidden;
+}
+
+.c-carousel-item-animated {
+  transition: transform 0.4s ease-in-out;
+}
+.c-carousel-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 0;
+  transform: translateX(-50%);
+  z-index: 100;
+  li {
+    display: inline-block;
+    opacity: 0.48;
+    width: 30px;
+    height: 2px;
+    background-color: #fff;
+    margin: 0 2px;
+    background-color: red;
+    cursor: pointer;
+    list-style: none;
+  }
+}
+
+.c-carousel-ctrl {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+  background-color: rgba(100, 100, 100, 0.8);
+}
+
+.c-carousel-ctrl-left {
+  transform: translate(20px, -50%);
+  left: 20px;
+}
+
+.c-carousel-ctrl-right {
+  transform: translate(-20px, -50%);
+  right: 20px;
+}
+
+.c-carousel-left-enter-active,
+.c-carousel-left-leave-active {
+  opacity: 1;
+  transform: translate(20px, -50%);
+  transition: transform 0.3s cubic-bezier(1, 0.5, 0.8, 1),
+    opacity 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.c-carousel-left-enter,
+.c-carousel-left-leave-to {
+  transform: translate(0%, -50%);
+  opacity: 0;
+}
+
+.c-carousel-right-enter-active,
+.c-carousel-right-leave-active {
+  opacity: 1;
+  transform: translate(-20px, -50%);
+  transition: transform 0.3s cubic-bezier(1, 0.5, 0.8, 1),
+    opacity 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.c-carousel-right-enter,
+.c-carousel-right-leave-to {
+  transform: translate(0%, -50%);
+  opacity: 0;
+}
