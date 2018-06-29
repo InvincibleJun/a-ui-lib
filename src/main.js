@@ -12,7 +12,7 @@ import './assets/css/index.css'
 
 import './assets/icon/iconfont.css'
 
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 Vue.use(Dialog)
 Vue.config.productionTip = false
 

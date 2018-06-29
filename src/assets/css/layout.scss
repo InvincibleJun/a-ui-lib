@@ -1,0 +1,74 @@
+.c-row {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c-row-flex {
+  display: flex;
+}
+
+$justify: flex-start flex-end center space-around space-between;
+@each $i in $justify {
+  .c-row-justify-#{$i} {
+    justify-content: $i;
+  }
+}
+
+$align: center flex-start flex-end;
+@each $i in $align {
+  .c-row-align-#{$i} {
+    align-items: $i;
+  }
+}
+
+.c-row:before,
+.c-row:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+@for $i from 1 through 24 {
+  .c-col-#{$i} {
+    width: $i / 24 * 100%;
+  }
+}
+
+.c-col {
+  float: left;
+  box-sizing: border-box;
+}
+
+@for $i from 1 through 24 {
+  .c-col-offset-#{$i} {
+    margin-left: $i / 24 * 100%;
+  }
+}
+
+$size: (
+  xs: 768px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xl: 1920px
+);
+
+@each $s, $v in $size {
+  @if $s == xs {
+    @media only screen and (max-width: $v) {
+      @for $i from 1 through 24 {
+        .c-col-#{$s}-#{$i} {
+          width: $i / 24 * 100%;
+        }
+      }
+    }
+  } @else {
+    @media only screen and (min-width: $v) {
+      @for $i from 1 through 24 {
+        .c-col-#{$s}-#{$i} {
+          width: $i / 24 * 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.c-progress-line-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.c-progress-line-percentage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #67c23a;
+  height: 100%;
+}
+
+.c-progress-line-not-inside {
+  margin-right: -55px;
+  padding-right: 50px;
+  display: inline-block;
+}
+
+.c-progress-line-bar {
+  width: 100%;
+  background-color: #ebeef5;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  height: 20px;
+}
+
+.c-progress-text {
+  margin-left: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}

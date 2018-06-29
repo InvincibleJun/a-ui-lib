@@ -1,42 +1,27 @@
 <template>
   <div id="app">
-    <c-carousel :width="400" :height="300">
-      <c-carousel-item>
-        <div class="item">1</div>
-      </c-carousel-item>
-      <c-carousel-item>
-        <div class="item">2</div>
-      </c-carousel-item>
-      <c-carousel-item>
-        <div class="item">3</div>
-      </c-carousel-item>
-      <c-carousel-item>
-        <div class="item">4</div>
-      </c-carousel-item>
-      <c-carousel-item>
-        <div class="item">5</div>
-      </c-carousel-item>
-    </c-carousel>
-    <!-- <Test></Test> -->
+    <!-- <Upload action="http://imgtest.357.com/upload/wjwxpic" /> -->
+
+    <Input v-model="value" :disabled="true" />
+    <!-- <color-picker v-model="value"></color-picker> -->
   </div>
 </template>
 
 <script>
-import CCarousel from './components/carousel'
-import CCarouselItem from './components/carousel/item'
-import Test from './test'
+import Input from '@/components/Input'
+// import colorPicker from '@/components/colorPicker';
+
 export default {
+  components: {
+    Input,
+  },
   name: 'App',
   data() {
     return {
-      value: 'rgba(36, 46, 109, 0.5)'
+      value: 'hellow'
     }
-  },
-  components: {
-    Test,
-    CCarousel,
-    CCarouselItem
   }
+
 }
 </script>
 
@@ -53,54 +38,15 @@ body {
   background-color: #ccc;
 }
 
-#app {
-  // width: 200px;
-  // height: 150px;
-}
-
 @import '@/assets/css/dropdown.scss';
 @import '@/assets/css/button.scss';
 @import '@/assets/css/datepicker.scss';
 @import '@/assets/css/carousel.scss';
+@import '@/assets/css/upload.scss';
+@import '@/assets/css/input.scss';
 
 div {
   box-sizing: border-box;
-}
-
-.c-progress-line-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.c-progress-line-percentage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 5px;
-  background-color: #67c23a;
-  height: 100%;
-}
-
-.c-progress-line-not-inside {
-  margin-right: -55px;
-  padding-right: 50px;
-  display: inline-block;
-}
-
-.c-progress-line-bar {
-  width: 100%;
-  background-color: #ebeef5;
-  vertical-align: middle;
-  display: inline-block;
-  position: relative;
-  height: 20px;
-}
-
-.c-progress-text {
-  margin-left: 5px;
-  vertical-align: middle;
-  display: inline-block;
 }
 
 .even {
@@ -155,79 +101,4 @@ div {
   color: #0080c0;
 }
 /*table end*/
-
-.c-row {
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c-row-flex {
-  display: flex;
-}
-
-$justify: flex-start flex-end center space-around space-between;
-@each $i in $justify {
-  .c-row-justify-#{$i} {
-    justify-content: $i;
-  }
-}
-
-$align: center flex-start flex-end;
-@each $i in $align {
-  .c-row-align-#{$i} {
-    align-items: $i;
-  }
-}
-
-.c-row:before,
-.c-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
-
-@for $i from 1 through 24 {
-  .c-col-#{$i} {
-    width: $i / 24 * 100%;
-  }
-}
-
-.c-col {
-  float: left;
-  box-sizing: border-box;
-}
-
-@for $i from 1 through 24 {
-  .c-col-offset-#{$i} {
-    margin-left: $i / 24 * 100%;
-  }
-}
-
-$size: (
-  xs: 768px,
-  sm: 768px,
-  md: 992px,
-  lg: 1200px,
-  xl: 1920px
-);
-
-@each $s, $v in $size {
-  @if $s == xs {
-    @media only screen and (max-width: $v) {
-      @for $i from 1 through 24 {
-        .c-col-#{$s}-#{$i} {
-          width: $i / 24 * 100%;
-        }
-      }
-    }
-  } @else {
-    @media only screen and (min-width: $v) {
-      @for $i from 1 through 24 {
-        .c-col-#{$s}-#{$i} {
-          width: $i / 24 * 100%;
-        }
-      }
-    }
-  }
-}
 </style>

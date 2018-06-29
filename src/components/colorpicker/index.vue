@@ -70,7 +70,7 @@ export default {
     },
 
     enter() {
-      this.$refs['color'].init()
+      this.color.init(this.colorValue)
     },
 
     init() {
