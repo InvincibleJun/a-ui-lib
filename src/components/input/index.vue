@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <slot name=""></slot> -->
-    <input :readonly="readonly" :class="className" :disabled="disabled" :autocomplete="autocomplete" type="type" v-if="type !== 'textarea' " />
+    <input :readonly="readonly" :class="className" :disabled="disabled" :autocomplete="autocomplete" type="type" v-if="type !== 'textarea'" @compositionupdate="handlerComposition" @compositionstart="handlerComposition" @compositionend="handlerComposition" />
 
     <textarea v-else />
   </div>
@@ -33,6 +33,7 @@ export default {
   },
 
   methods: {
+    handlerComposition() {},
     handlerFocus() {},
     setValue() {}
   },

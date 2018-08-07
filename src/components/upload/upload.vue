@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import alert from '../alert';
+import alert from '../alert'
 import http from './upload-ajax'
 export default {
   data() {
@@ -13,10 +13,12 @@ export default {
       file: null
     }
   },
+
   props: {
     expect: String,
     autoUpload: Boolean
   },
+
   methods: {
     open() {
       this.$refs['input'].click()
