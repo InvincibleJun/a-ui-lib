@@ -12,9 +12,6 @@ import Loading from '@/components/loading/index'
 
 export default {
   components: {
-    // Select,
-    // Option,
-    // Dropdown,
     Loading
   },
   name: 'App',

@@ -1,10 +1,10 @@
 <template>
   <div class="c-loading-container" v-show="showContainer">
     <transition v-if="wrapper" name="c-fade">
-      <div class="c-loading-wrapper" ref="c-loading-window" v-show="show" :style="{opacity}" />
+      <div class="c-loading-wrapper" ref="c-loading-window" v-show="show" :style="{opacity, backgroundColor: color}" />
     </transition>
     <transition name="c-fade">
-      <div class="c-loading-window" v-show="show">
+      <div class="c-loading-window" v-show="show" :style="{transform: `scale(${scale}) translate(-50%, -50%)`}">
         <span></span>
         <span></span>
         <span></span>
@@ -15,11 +15,23 @@
 </template>
 
 <script>
+const map = {
+  big: 1.2,
+  normal: 1,
+  small: 0.8,
+  mini: 0.5
+}
+
 export default {
   data() {
     return {
       timer: null,
       showContainer: false
+    }
+  },
+  computed: {
+    scale() {
+      return typeof this.size === 'string' ? map[this.size] : this.size
     }
   },
   watch: {
@@ -46,6 +58,23 @@ export default {
     wrapper: {
       type: Boolean,
       default: true
+    },
+    color: {
+      type: String,
+      default: '#ccc'
+    },
+    size: {
+      validator: function(value) {
+        switch (typeof value) {
+          case 'number':
+            return number > 0
+          case 'string':
+            return Object.keys(map).includes(type)
+          default:
+            return false
+        }
+      },
+      default: 'normal'
     }
   }
 }
@@ -70,7 +99,6 @@ export default {
 
 .c-loading-wrapper {
   @extend .c-loading-container;
-  background-color: #ccc;
 }
 
 .c-loading-window {
@@ -79,7 +107,6 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   span {
     position: absolute;
     width: 10px;
