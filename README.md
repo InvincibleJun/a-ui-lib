@@ -27,4 +27,30 @@ npm run e2e
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### input 
+
+#### props
+
+| key          | type    | enum          | requried | default | desc                       |
+| ------------ | ------- | ------------- | -------- | ------- | -------------------------- |
+| value        | string  | -             | true     | -       | 表单值,可用v-model双向绑定 |
+| disabled     | boolean | true/false    | false    | false   | 是否禁用                   |
+| type         | string  | text/textarea | false    | text    | 输入类型                   |
+| autocomplete | boolean | true/false    | false    | false   | 是否开启自动完成           |
+| readonly     | boolean | true/false    | false    | false   | 是否只读模式               |
+
+#### event
+
+#### slot
+
+### radio
+
+| key   | type          | enum | requried | default | desc                       |
+| ----- | ------------- | ---- | -------- | ------- | -------------------------- |
+| value | string/number | -    | true     | -       | 表单值,可用v-model双向绑定 |
+
+### radioGroup
+
+| key   | type          | enum | requried | default | desc                       |
+| ----- | ------------- | ---- | -------- | ------- | -------------------------- |
+| value | string/number | -    | true     | -       | 表单值,可用v-model双向绑定 |

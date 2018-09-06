@@ -1,11 +1,48 @@
+import Dropdwon from '../dropdown'
+
 export default {
-  data() {},
+  data() {
+    return {}
+  },
+
+  components: {
+    Dropdwon
+  },
 
   props: {
-    value: String
+    value: [String, Number]
+  },
+
+  methods: {
+    open() {}
+  },
+
+  created() {
+    // if (this.$slots.default) {
+    //   console.log(this)
+    // }
+  },
+
+  mounted() {
+    let { left, top, height } = this.$el.getBoundingClientRect()
   },
 
   render() {
-    return <div>{/* <input> */}</div>
+    return (
+      <div>
+        <input
+          class="c-input"
+          value={this.value}
+          readonly
+          style="width:300px"
+        />
+
+        <transition name="modal-fade">
+          <ul class="c-dropdown-menu" style="style" v-if="show">
+            <slot name="menu" />
+          </ul>
+        </transition>
+      </div>
+    )
   }
 }

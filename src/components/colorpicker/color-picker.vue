@@ -64,8 +64,7 @@ export default {
     }
   },
 
-  mounted() {
-    // this.init()
+  mounted() { 
     drag(this.$el, this.change)
   },
 

@@ -1,32 +1,44 @@
 <template>
   <div id="app">
-    <!-- <Upload action="http://imgtest.357.com/upload/wjwxpic" /> -->
-
-    <Input v-model="value" :disabled="true" />
-    <!-- <color-picker v-model="value"></color-picker> -->
+    <div style="width: 200px;height: 200px">
+      <Loading :show="show" />
+    </div>
+    <button @click="show=!show">点我</button>
   </div>
 </template>
 
 <script>
-import Input from '@/components/Input'
-// import colorPicker from '@/components/colorPicker';
+import Loading from '@/components/loading/index'
 
 export default {
   components: {
-    Input,
+    // Select,
+    // Option,
+    // Dropdown,
+    Loading
   },
   name: 'App',
   data() {
     return {
-      value: 'hellow'
+      value: '1',
+      show: false
+    }
+  },
+  watch: {
+    value(nV, oV) {
+      console.log(nV)
     }
   }
-
 }
 </script>
 
 <style lang="scss">
 body {
+  margin: 0;
+  height: 100vh;
+}
+
+input {
   margin: 0;
 }
 
@@ -44,6 +56,7 @@ body {
 @import '@/assets/css/carousel.scss';
 @import '@/assets/css/upload.scss';
 @import '@/assets/css/input.scss';
+@import '@/assets/css/radio.scss';
 
 div {
   box-sizing: border-box;
