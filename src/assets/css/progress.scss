@@ -1,35 +1,56 @@
 .c-progress-line-wrapper {
   position: relative;
-  width: 100%;
+  transition: opacity .3s ease;
+  &:hover{
+    opacity: .8;
+  }
+}
+
+.c-progress-line-bar {
   overflow: hidden;
+  vertical-align: middle;
+  position: relative;
+  height: 100%;
 }
 
 .c-progress-line-percentage {
   position: absolute;
+  transition: width .3s ease-in;
   top: 0;
   left: 0;
-  border-radius: 5px;
-  background-color: #67c23a;
   height: 100%;
-}
-
-.c-progress-line-not-inside {
-  margin-right: -55px;
-  padding-right: 50px;
-  display: inline-block;
-}
-
-.c-progress-line-bar {
-  width: 100%;
-  background-color: #ebeef5;
-  vertical-align: middle;
-  display: inline-block;
-  position: relative;
-  height: 20px;
+  text-align: right;
 }
 
 .c-progress-text {
-  margin-left: 5px;
-  vertical-align: middle;
-  display: inline-block;
+  margin: 0 4px;
+  color: #fff;
+  font-size: 12px;
+  &.c-progress-text-circle {
+    color: #333;
+    font-size: 14px;
+  }
+  &.c-progress-text-out {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 0;
+    color: #333;
+  }
+}
+
+.c-progress-circle {
+  @extend .c-progress-line-wrapper;
+  position: relative;
+  overflow: hidden;
+  div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }  
+}
+
+.c-progress-circle-percentage {
+  transition: stroke-dashoffset .3s ease-in;
 }

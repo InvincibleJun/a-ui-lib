@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import Loading from '@/components/loading/index'
 
 export default {
   components: {
@@ -47,13 +46,7 @@ input {
   background-color: #ccc;
 }
 
-@import '@/assets/css/dropdown.scss';
-@import '@/assets/css/button.scss';
-@import '@/assets/css/datepicker.scss';
-@import '@/assets/css/carousel.scss';
-@import '@/assets/css/upload.scss';
-@import '@/assets/css/input.scss';
-@import '@/assets/css/radio.scss';
+
 
 div {
   box-sizing: border-box;

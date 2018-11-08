@@ -1,49 +1,201 @@
+import { isColor } from "../../utils/valid-prop";
+
 export default {
+  name: "c-progress",
+
+  data() {
+    return {
+      circle: null
+    };
+  },
+
   props: {
-    percentage: {
+    value: {
       type: Number,
-      default: 0
+      required: true
     },
     // line, circle
     type: {
       type: String,
-      default: 'line'
+      default: "line"
+    },
+
+    width: {
+      type: Number,
+      default: 120
+    },
+
+    height: {
+      type: Number,
+      default: 18
     },
 
     textInside: {
       type: Boolean,
       default: false
+    },
+
+    strokeWidth: {
+      type: Number,
+      default: 6
+    },
+
+    fixed: {
+      type: Number,
+      default: 1
+    },
+
+    color: {
+      type: String,
+      default: "#67c23a",
+      validator: isColor
+    },
+
+    bgColor: {
+      type: String,
+      default: '#ebeef5',
+      validator: isColor
     }
   },
 
-  methods: {
-    getLineStyle() {
-      return { width: this.percentage + '%' }
+  watch: {
+    percentage(nv) {
+      if (nv === 100) {
+        this.$emit('on-finished', 100)
+      }
+    }
+  },
+
+  computed: {
+    percentage() {
+      return this.value.toFixed(this.fixed);
     },
 
+    lineStyle() {
+      return {
+        width: this.percentage + "%",
+        borderRadius: this.height / 2 + "px",
+        backgroundColor: this.color
+      };
+    },
+
+    strokeDash() {
+      return `${this.length} ${this.length}`;
+    },
+
+    svgCircleD() {
+      return `M 50 50 m 0 -${this.svgRadius} a ${this.svgRadius} ${
+        this.svgRadius
+      } 0 0 0 0 ${this.svgRadius * 2} a ${this.svgRadius} ${
+        this.svgRadius
+      } 0 1 0 0 -${this.svgRadius * 2}`;
+    },
+
+    svgStrokeWidth() {
+      return (this.strokeWidth / this.width) * 100;
+    },
+
+    svgRadius() {
+      return (100 - this.svgStrokeWidth) / 2;
+    },
+
+    length() {
+      return 2 * Math.PI * this.svgRadius;
+    },
+
+    dashoffset() {
+      return this.circle
+        ? this.length - (this.percentage / 100) * this.length
+        : this.length;
+    },
+
+    getTextClass() {
+      let classNames = ["c-progress-text"];
+      if (this.type === "circle") {
+        classNames.push("c-progress-text-circle");
+      } else if (!this.textInside) {
+        classNames.push("c-progress-text-out");
+      }
+      return classNames;
+    }
+  },
+
+  mounted() {
+    this.timer = setTimeout(() => {
+      this.circle = this.$refs.circle;
+    }, 0);
+  },
+
+  destory() {
+    clearTimeout(this.timer);
+  },
+
+  methods: {
     getLineClass() {
-      let classes = ['c-progress-line-bar']
-      !this.textInside && classes.push('c-progress-line-not-inside')
-      return classes.join(' ')
+      let classes = ["c-progress-line-bar"];
+      !this.textInside && classes.push("c-progress-line-not-inside");
+      return classes.join(" ");
     }
   },
 
   render(h) {
-    const { type, textInside, percentage } = this
-    if (type === 'line') {
+    const { type, textInside, percentage } = this;
+    const text = (
+      <div class={this.getTextClass} style={{ lineHeight: this.height + "px" }}>
+        {percentage}%
+      </div>
+    );
+    if (type === "line") {
       return (
-        <div class="c-progress-line-wrapper">
-          <div class={this.getLineClass()}>
-            <div class="c-progress-line-percentage" style={this.getLineStyle()}>
-              {textInside && (
-                <div class="c-progress-text-inside">{percentage}</div>
-              )}
+        <div
+          class="c-progress-line-wrapper"
+          style={{
+            paddingRight: !textInside ? 50 + "px" : 0,
+          }}
+        >
+          <div
+            class="c-progress-line-bar"
+            style={{
+              backgroundColor: this.bgColor,
+              borderRadius: this.height / 2 + "px",
+              height: this.height + "px"
+            }}
+          >
+            <div class="c-progress-line-percentage" style={this.lineStyle}>
+              {textInside && text}
             </div>
           </div>
-          <div class="c-progress-text">{percentage}%</div>
+          {text}
         </div>
-      )
+      );
+    } else if (type === "circle") {
+      return (
+        <div
+          class="c-progress-circle"
+          style={{ width: this.width + "px", height: this.width + "px" }}
+        >
+          <svg version="1.1" viewBox="0 0 100 100">
+            <path
+              d={this.svgCircleD}
+              stroke={this.bgColor}
+              fill="none"
+              stroke-width={this.svgStrokeWidth}
+            />
+            <path
+              stroke-linecap="round"
+              class="c-progress-circle-percentage"
+              stroke-dasharray={this.strokeDash}
+              stroke-dashoffset={this.dashoffset}
+              ref="circle"
+              d={this.svgCircleD}
+              stroke={this.color}
+              fill="none"
+              stroke-width={this.svgStrokeWidth}
+            />
+          </svg>
+          {text}
+        </div>
+      );
     }
-    // return h('div')
   }
-}
+};
