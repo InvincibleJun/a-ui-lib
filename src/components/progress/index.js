@@ -53,7 +53,7 @@ export default {
 
     bgColor: {
       type: String,
-      default: '#ebeef5',
+      default: "#ebeef5",
       validator: isColor
     }
   },
@@ -61,7 +61,7 @@ export default {
   watch: {
     percentage(nv) {
       if (nv === 100) {
-        this.$emit('on-finished', 100)
+        this.$emit("on-finished", 100);
       }
     }
   },
@@ -150,7 +150,7 @@ export default {
         <div
           class="c-progress-line-wrapper"
           style={{
-            paddingRight: !textInside ? 50 + "px" : 0,
+            paddingRight: !textInside ? 50 + "px" : 0
           }}
         >
           <div

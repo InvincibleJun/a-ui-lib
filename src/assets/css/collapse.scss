@@ -1,0 +1,36 @@
+.c-collapse-item{
+  border: 1px solid #dcdee2;
+}
+
+.c-collapse-item-title{
+  border-bottom: 1px solid #dcdee2;
+  line-height: 20px;
+  span {
+    cursor: pointer;
+    user-select: none;
+    float: right;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+}
+
+.c-collapse-item-content{
+  p {
+    margin: 0;
+  }
+  // transition: height .2s ease-in;
+  // overflow: hidden;
+}
+
+
+// .c-collapse-enter-active, .c-collapse-leave-active {
+//   transition: height 8s;
+// }
+
+// .c-collapse-enter, .c-collapse-leave-to {
+//   height: 0;
+// }
+
+.collapse-transition {
+  transition: height 0.3s;
+}

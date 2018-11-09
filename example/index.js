@@ -6,7 +6,7 @@ import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
 import CView from '../src/index';
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 // import './assets/icon/iconfont.css'
 
 Vue.use(ElementUI)
