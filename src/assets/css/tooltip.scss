@@ -1,0 +1,44 @@
+$bg: rgba(70, 76, 91, 0.9);
+
+.c-tooltip-container {
+  display: inline-block;
+}
+
+.c-tooltip-popper {
+  background: $bg;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 1px #ccc;
+  p {
+    margin: 0;
+  }
+  &[x-placement^="bottom"] .c-tooltip-arrow {
+    top: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: $bg;
+  }
+  &[x-placement^="top"] .c-tooltip-arrow {
+    bottom: -5px;
+    border-width: 5 5px 0px;
+    border-top-color: $bg;
+  }
+  &[x-placement^="left"] .c-tooltip-arrow {
+    right: -5px;
+    border-width: 5px 0px 5px 5px;
+    border-left-color: $bg;
+  }
+  &[x-placement^="right"] .c-tooltip-arrow {
+    left: -5px;
+    border-width: 5px 5px 5px 0px;
+    border-right-color: $bg;
+  }
+}
+
+.c-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}

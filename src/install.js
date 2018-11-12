@@ -3,6 +3,7 @@ import Progress from "./components/progress/index";
 import LoadingBar from "./components/loading-bar/index";
 import Collapse from "./components/collapse/index";
 import CollapseItem from "./components/collapse-item/index";
+import Tooltip from "./components/tooltip/index";
 
 let _Vue;
 
@@ -19,5 +20,7 @@ export default function install(Vue) {
 
   Vue.component(CollapseItem.name, CollapseItem);
 
-  Vue.prototype.$LoadingBar = LoadingBar
+  Vue.component(Tooltip.name, Tooltip);
+
+  Vue.prototype.$LoadingBar = LoadingBar;
 }

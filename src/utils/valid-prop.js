@@ -4,3 +4,8 @@ export const isColor = function(val) {
     val.replace(" ", "")
   );
 };
+
+
+export const isPlacement = function(val) {
+  return /^(auto|top|right|bottom|left)(-start|-end)?$/.test(val)
+}
