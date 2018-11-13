@@ -40,7 +40,6 @@ export default {
     init() {
       const { _saturation, _value } = this.color
       const { width, height } = this.$el.getBoundingClientRect()
-      debugger
       this.left = _saturation / 100 * width
       this.top = (100 - _value) / 100 * height
     },

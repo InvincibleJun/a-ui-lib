@@ -7,12 +7,13 @@
   border: 1px solid #dcdfe6;
   border-color: #dcdfe6;
   color: #606266;
-  -webkit-appearance: none;
+  appearance: none;
   text-align: center;
   box-sizing: border-box;
   outline: none;
   margin: 0;
-  transition: 0.1s;
+  transition: color 0.1s ease-in-out, border-color 0.1s ease-in-out,
+    background-color 0.1s ease-in-out;
   font-weight: 500;
   user-select: none;
   padding: 12px 20px;
@@ -20,10 +21,14 @@
   border-radius: 4px;
 
   &:hover,
-  &:focus {
-    background-color: #ecf5ff;
+  &:active {
+    background-color: #fff;
     border-color: #66b1ff;
     color: #66b1ff;
+  }
+
+  &:focus {
+    box-shadow: 0 0 1px 1px rbg(240, 240, 240);
   }
 
   &.c-button-is-disabled,

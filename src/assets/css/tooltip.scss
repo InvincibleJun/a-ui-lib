@@ -1,37 +1,117 @@
-$bg: rgba(70, 76, 91, 0.9);
+// $bg: rgba(70, 76, 91, 0.9);
+$offset: 8px;
+$direction-map: (
+  top: bottom,
+  left: right,
+  bottom: top,
+  right: left
+);
+
+@mixin paintArrow($direction, $width, $color: inherit) {
+  border-#{$direction}-color: $color;
+  border-width: $width;
+  border-#{map-get($direction-map, $direction)}-width: 0;
+}
+
+@mixin arrow($direction, $d1, $d2, $d3) {
+  &[x-placement^="$direction"] {
+    padding-top: $offset;
+    .c-tooltip-arrow {
+      margin-#{d1}: -5px;
+      $d1: 50%;
+      $d3: -5px;
+      // @include paintArrow($direction, 5px, $bg, $d3);
+    }
+  }
+  &[x-placement="$direction-start"] .c-tooltip-arrow {
+    $d1: 12px;
+  }
+  &[x-placement="$direction-end"] .c-tooltip-arrow {
+    $d2: 12px;
+  }
+}
 
 .c-tooltip-container {
   display: inline-block;
+  cursor: pointer;
 }
 
-.c-tooltip-popper {
-  background: $bg;
-  color: #fff;
-  padding: 6px;
-  border-radius: 4px;
-  box-shadow: 0 0 2px 1px #ccc;
-  p {
-    margin: 0;
+.c-tooltip-popper-container {
+  .c-tooltip-popper {
+    position: relative;
+    // background: $bg;
+    color: #fff;
+    border-radius: 4px;
+    border-width: 0px;
+    box-shadow: 0 0 2px 1px #ccc;
   }
-  &[x-placement^="bottom"] .c-tooltip-arrow {
-    top: -5px;
-    border-width: 0 5px 5px;
-    border-bottom-color: $bg;
+
+  // bottom
+  &[x-placement^="bottom"] {
+    padding-top: $offset;
+    .c-tooltip-arrow {
+      margin-left: -5px;
+      left: 50%;
+      top: -5px;
+      @include paintArrow("bottom", 5px);
+    }
   }
-  &[x-placement^="top"] .c-tooltip-arrow {
-    bottom: -5px;
-    border-width: 5 5px 0px;
-    border-top-color: $bg;
+  &[x-placement="bottom-start"] .c-tooltip-arrow {
+    left: 12px;
   }
-  &[x-placement^="left"] .c-tooltip-arrow {
-    right: -5px;
-    border-width: 5px 0px 5px 5px;
-    border-left-color: $bg;
+  &[x-placement="bottom-end"] .c-tooltip-arrow {
+    right: 12px;
   }
-  &[x-placement^="right"] .c-tooltip-arrow {
-    left: -5px;
-    border-width: 5px 5px 5px 0px;
-    border-right-color: $bg;
+
+  // top
+  &[x-placement^="top"] {
+    padding-bottom: $offset;
+    .c-tooltip-arrow {
+      margin-left: -5px;
+      left: 50%;
+      bottom: -5px;
+      @include paintArrow("top", 5px);
+    }
+  }
+  &[x-placement="top-start"] .c-tooltip-arrow {
+    left: 12px;
+  }
+  &[x-placement="top-end"] .c-tooltip-arrow {
+    right: 12px;
+  }
+
+  // left
+  &[x-placement^="left"] {
+    padding-right: $offset;
+    .c-tooltip-arrow {
+      margin-top: -5px;
+      top: 50%;
+      right: -5px;
+      @include paintArrow("left", 5px);
+    }
+  }
+  &[x-placement="left-start"] .c-tooltip-arrow {
+    top: 12px;
+  }
+  &[x-placement="left-end"] .c-tooltip-arrow {
+    bottom: 12px;
+  }
+
+  // right
+  &[x-placement^="right"] {
+    padding-right: $offset;
+    .c-tooltip-arrow {
+      margin-top: -5px;
+      top: 50%;
+      left: -5px;
+      @include paintArrow("right", 5px);
+    }
+  }
+  &[x-placement="right-start"] .c-tooltip-arrow {
+    top: 12px;
+  }
+  &[x-placement="right-end"] .c-tooltip-arrow {
+    bottom: 12px;
   }
 }
 
@@ -41,4 +121,12 @@ $bg: rgba(70, 76, 91, 0.9);
   height: 0;
   border-color: transparent;
   border-style: solid;
+}
+
+.c-tooltip-content {
+  margin: 0;
+  padding: 4px 10px;
+  & > p {
+    margin: 0;
+  }
 }

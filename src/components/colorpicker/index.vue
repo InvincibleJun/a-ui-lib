@@ -1,6 +1,8 @@
 <template>
   <div style="width: 340px; height: 180px;">
-    <div :style="{backgroundColor: colorValue}" class="c-colorpicker-toggle" @click="show=true"></div>
+
+    <div :style="style" class="c-colorpicker-toggle c-colorpicker-none" @click="show=true" />
+
     <transition name="c-zoom-in-top" @enter="enter">
       <div v-if="show">
         <!-- hue色彩选择 -->
@@ -10,7 +12,8 @@
         <color-picker :color="color" />
 
         <!-- 透明 -->
-        <alpha-picker v-if="showAlpha" :color="color"></alpha-picker>
+        <alpha-picker v-if="alpha" :color="color"></alpha-picker>
+
         <input v-model="colorValue" />
         <button @click="ok">确定</button>
         <button @click="quit">取消</button>
@@ -20,24 +23,25 @@
 </template>
 
 <script>
-import Color from './color';
-import AlphaPicker from './alpha-picker'
-import HuePicker from './hue-picker'
-import ColorPicker from './color-picker'
-import drag from './drag'
+import Color from "./color";
+import AlphaPicker from "./alpha-picker";
+import HuePicker from "./hue-picker";
+import ColorPicker from "./color-picker";
+import drag from "./drag";
 
 export default {
+  name: "c-colorpicker",
   data() {
     return {
       show: false,
-      colorBg: 'rgb(255,255,255)',
+      colorBg: "rgb(255,255,255)",
       hueTop: 0,
       eleLeft: 0,
       //
       curLeft: 0,
       curTop: 0,
-      color: null,
-    }
+      color: null
+    };
   },
 
   components: {
@@ -47,68 +51,63 @@ export default {
   },
 
   props: {
-    value: String,
-    showAlpha: {
-      type: Boolean,
-      default: false
-    },
-    colorFormat: {
+    value: {
       type: String,
-      default: 'rgb'
+      require: true
+    },
+    alpha: {
+      type: Boolean,
+      default: true
+    },
+    format: {
+      type: String,
+      default: "hex"
     }
   },
 
   methods: {
-
     quit() {
-      this.color.init(this.value)
+      this.color.init(this.value);
       this.show = false;
     },
 
     ok() {
-      this.$emit('input', this.colorValue)
+      this.$emit("input", this.colorValue);
     },
 
     enter() {
-      this.color.init(this.colorValue)
+      this.color.init(this.colorValue);
     },
 
-    init() {
-
-    }
+    init() {}
   },
 
   computed: {
-
+    style() {
+      return this.value ? { background: this.color.getRgbString() } : {} 
+    },
     colorValue() {
-      return this.color.getRgbString()
+      return this.color.getRgbString();
     }
-
   },
 
-  mounted() {
-  },
+  mounted() {},
 
   watch: {
     value: {
       handler(nV) {
-        if (!nV) return
-
         if (!this.color) {
-          this.color = new Color({showAlpha: this.showAlpha})
+          this.color = new Color({
+            showAlpha: this.alpha,
+            format: this.format
+          });
         }
-    
-        // this.initValue = nV;
-
-        this.color.init(nV)
-
-        // this.
+        this.color.init(nV);
       },
       immediate: true
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss">
@@ -132,7 +131,20 @@ export default {
   height: 40px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  position: relative;
+  &.c-colorpicker-none {
+    border-style: dashed;
+  }
+  &.c-colorpicker-none:after{
+    content: 'x';
+    color: '#ccc';
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+  }
 }
+
 
 .c-colorpicker-wrapper {
   margin: 20px;
@@ -193,7 +205,6 @@ export default {
     red
   );
 }
-
 .c-colorpicker-hue-cursor {
   position: absolute;
   top: 0;
@@ -205,7 +216,6 @@ export default {
   // z-index: 1;
   transform: translate(-2px, -50%);
 }
-
 .c-colorpicker-alapha {
   position: relative;
   height: 12px;

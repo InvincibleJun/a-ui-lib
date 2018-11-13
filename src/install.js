@@ -4,6 +4,8 @@ import LoadingBar from "./components/loading-bar/index";
 import Collapse from "./components/collapse/index";
 import CollapseItem from "./components/collapse-item/index";
 import Tooltip from "./components/tooltip/index";
+import Loading from "./components/loading/index";
+import Colorpicker from "./components/colorpicker/index";
 
 let _Vue;
 
@@ -21,6 +23,9 @@ export default function install(Vue) {
   Vue.component(CollapseItem.name, CollapseItem);
 
   Vue.component(Tooltip.name, Tooltip);
+  
+  Vue.component(Loading.name, Loading);
+  Vue.component(Colorpicker.name, Colorpicker);
 
   Vue.prototype.$LoadingBar = LoadingBar;
 }

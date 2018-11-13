@@ -36,7 +36,6 @@ export default {
       
       this.left = tmpLeft;     
       let alpha = Math.round(this.left / width * 100)
-      // debugger
       this.color.set('alpha', alpha)
     }
   },

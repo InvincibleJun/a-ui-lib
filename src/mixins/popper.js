@@ -29,7 +29,12 @@ export default {
       const option = {
         placement: this.placement,
         modifiers: {
-          preventOverflow: { enabled: false }
+          preventOverflow: {
+            enabled: false
+          },
+          hide: {
+            enabled: false
+          }
         },
         onUpdate: () => {
           this.$emit("update");
