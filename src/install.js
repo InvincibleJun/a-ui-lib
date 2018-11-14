@@ -6,6 +6,9 @@ import CollapseItem from "./components/collapse-item/index";
 import Tooltip from "./components/tooltip/index";
 import Loading from "./components/loading/index";
 import Colorpicker from "./components/colorpicker/index";
+import Dropdown from "./components/dropdown/index";
+import DropdownItem from "./components/dropdown-item/index";
+import Datepicker from "./components/datepicker/index";
 
 let _Vue;
 
@@ -23,9 +26,16 @@ export default function install(Vue) {
   Vue.component(CollapseItem.name, CollapseItem);
 
   Vue.component(Tooltip.name, Tooltip);
-  
+
   Vue.component(Loading.name, Loading);
+
   Vue.component(Colorpicker.name, Colorpicker);
+
+  Vue.component(Dropdown.name, Dropdown);
+
+  Vue.component(DropdownItem.name, DropdownItem);
+
+  Vue.component(Datepicker.name, Datepicker);
 
   Vue.prototype.$LoadingBar = LoadingBar;
 }

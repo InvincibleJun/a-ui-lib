@@ -2,12 +2,11 @@
   <div style="margin-left: 300px; height: 200px;width: 200px">
     <!-- <c-button @click="c" :disabled="true">aa</c-button> -->
     <!-- <c-loading :show="true" ></c-loading> -->
-    <c-colorpicker v-model="value"></c-colorpicker>
+    <c-datepicker v-model="value"/>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -16,8 +15,8 @@ export default {
     };
   },
   methods: {
-    c() {
-      console.log(1);
+    select(a) {
+      // console.log(a);
     }
   },
   created() {

@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   z-index: 10;
-  padding: 10px 0;
+  padding: 0;
   margin: 0;
   background-color: #fff;
   border: 1px solid #ebeef5;
@@ -25,8 +25,15 @@
   color: #606266;
   cursor: pointer;
   outline: none;
+  transition: background-color .3s ease-in-out;
   &:hover {
-    background-color: #ccc;
+    background-color: #EEEEEE;
+  }
+  &.c-dropdown-item-active{
+    background-color: #EEEEEE;
+  }
+  .c-dropdown-item-disabled{
+    background-color: #BBBBBB;
   }
 }
 

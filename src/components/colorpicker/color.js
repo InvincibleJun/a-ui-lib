@@ -1,11 +1,30 @@
-import { isColor } from "../../utils/valid-prop";
-
 const hsv2hsl = function(hue, sat, val) {
   return [
     hue,
     (sat * val) / ((hue = (2 - sat) * val) < 1 ? hue : 2 - hue) || 0,
     hue / 2
   ];
+};
+
+const hsl2hsv = function(hue, sat, light) {
+  sat = sat / 100;
+  light = light / 100;
+  let smin = sat;
+  const lmin = Math.max(light, 0.01);
+  let sv;
+  let v;
+
+  light *= 2;
+  sat *= light <= 1 ? light : 2 - light;
+  smin *= lmin <= 1 ? lmin : 2 - lmin;
+  v = (light + sat) / 2;
+  sv = light === 0 ? (2 * smin) / (lmin + smin) : (2 * sat) / (light + sat);
+
+  return {
+    h: hue,
+    s: sv * 100,
+    v: v * 100
+  };
 };
 
 /**
@@ -125,27 +144,6 @@ const bound01 = function(value, max) {
   return (value % max) / parseFloat(max);
 };
 
-const hsl2hsv = function(hue, sat, light) {
-  sat = sat / 100;
-  light = light / 100;
-  let smin = sat;
-  const lmin = Math.max(light, 0.01);
-  let sv;
-  let v;
-
-  light *= 2;
-  sat *= light <= 1 ? light : 2 - light;
-  smin *= lmin <= 1 ? lmin : 2 - lmin;
-  v = (light + sat) / 2;
-  sv = light === 0 ? (2 * smin) / (lmin + smin) : (2 * sat) / (light + sat);
-
-  return {
-    h: hue,
-    s: sv * 100,
-    v: v * 100
-  };
-};
-
 /**
  * hex色值转rgb
  * @param {string} s hex色值
@@ -174,16 +172,11 @@ const hexToRgb = function(s) {
  * @return{string} hex色值
  */
 const rgbToHex = function(r, g, b) {
-  return (
-    "#" +
-    r.toString(16).slice(-2) +
-    g.toString(16).slice(-2) +
-    b.toString(16).slice(-2)
-  );
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 };
 
 export default class Color {
-  constructor({ showAlpha, format }) {
+  constructor({ alpha, format }) {
     // H 色调
     this._hue = 0;
     // S 饱和度
@@ -194,41 +187,73 @@ export default class Color {
     this._alpha = 100;
     // 输出格式
     this.format = format;
-    this._showAlpha = showAlpha;
+    // 透明
+    this._showAlpha = alpha;
+    // 是否初始值
+    this.initValue = false;
   }
 
+  /**
+   * 初始化
+   * @param {string} value 色值
+   */
   init(value) {
+    this.initValue = false;
     let checkRgbOrRgba = /^rgb(a)?[\(](2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?),?(0?\.\d{1,2}|1|0)?[\)]{1}?$/i;
+    let checkHex = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
+    let checkHsvOrHsl = /^hs(l|v)\((3[0-5][0-9]|360|[1-2][0-9][0-9]|[1-9][0-9]|[0-9]),(100|[1-9][0-9]|[1-9][0-9]|[0-9]),(100|[1-9][0-9]|[1-9][0-9]|[0-9])\)$/;
 
     let matchRgb = value.match(checkRgbOrRgba);
-
-    if (matchRgb) {
-      this.setHsvAndAlpha(matchRgb[1], matchRgb[2], matchRgb[3], matchRgb[4]);
-      return;
-    }
-
-    let checkHex = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
-
-    let matchHex = value.match(checkHex);
-
-    if (matchHex) {
-      let { r, g, b } = hexToRgb(matchHex[1]);
-      this.setHsvAndAlpha(r, g, b);
+    // 若显示透明，则只能识别rgba色彩
+    if (this._showAlpha) {
+      if (matchRgb) {
+        this.setHsvAndAlpha(matchRgb[2], matchRgb[3], matchRgb[4], matchRgb[5]);
+        return;
+      }
     } else {
-
-      if (value !== ''){
-        if (process.env.NODE_ENV === "development") {
-          console.log(`${value} is not a color value`);
+      if (this.format === "rgb") {
+        if (matchRgb) {
+          this.setHsvAndAlpha(
+            matchRgb[2],
+            matchRgb[3],
+            matchRgb[4],
+            matchRgb[5]
+          );
+        }
+        return;
+      } else if (this.format === "hex") {
+        let matchHex = value.match(checkHex);
+        if (matchHex) {
+          let { r, g, b } = hexToRgb(matchHex[1]);
+          return this.setHsvAndAlpha(r, g, b);
+        }
+      } else {
+        let match = value.match(checkHsvOrHsl);
+        if (match) {
+          if (match[1] === "l") {
+            let { h, s, v } = hsl2hsv(match[2], match[3], match[4]);
+            return this.set({
+              hue: h,
+              saturation: s,
+              value: v
+            });
+          } else {
+            return this.set({
+              hue: match[2],
+              saturation: match[3],
+              value: match[4]
+            });
+          }
         }
       }
-     
-      this.setHsvAndAlpha(0, 0, 0, 0);
     }
+    this.initValue = true;
+    this.setHsvAndAlpha(255, 255, 255, 1);
   }
 
   setHsvAndAlpha(r, g, b, a) {
     if (this._showAlpha && a) {
-      this.set("alpha", (a * 100).toFixed(0));
+      this.set("alpha", +(a * 100).toFixed(0));
     }
 
     let { h, s, v } = rgbToHsvAndHsl(r, g, b);
@@ -250,28 +275,49 @@ export default class Color {
     }
   }
 
-  get(h, s, v) {
+  /**
+   * 返回当前颜色字符串
+   */
+  getColorString() {
+    let { format, _showAlpha } = this;
     let { r, g, b } = hsvToRgb(this._hue, this._saturation, this._value);
+    let hslString;
+    if (format === "hsl") {
+      let { h, s, l } = rgbToHsvAndHsl(r, g, b, true);
+      hslString = `hsl(${h},${s},${l})`;
+    }
+    console.log(r, g, b);
 
-    // alpha只返回rgba
-    if (this._showAlpha) {
-      return { r, g, b, a: this._alpha / 100 };
+    if (_showAlpha) {
+      return `rgba(${r}, ${g}, ${b}, ${this._alpha / 100})`;
     } else {
-      switch (this.format) {
+      switch (format) {
         case "rgb":
-          return { r, g, b };
+          return `rgb(${r}, ${g}, ${b})`;
         case "hsv":
-          return { h: this._hue, s: this._saturation, v: this._value };
+          return `hsv(${this._hue},${this._saturation},${this._value})`;
         case "hex":
           return rgbToHex(r, g, b);
         case "hsl":
-          return rgbToHsvAndHsl(r, g, b, true);
+          return hslString;
       }
     }
   }
 
-  getRgbString(h, s, v) {
-    let { r, g, b, a } = this.get(h, s, v);
-    return a ? `rgba(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
+  /**
+   * 处理hsv=>rgb
+   * @param {number} h
+   * @param {number} s
+   * @param {number} v
+   * @param {boolean} toString
+   */
+  getRgb(
+    h = this._hue,
+    s = this._saturation,
+    v = this._value,
+    toString = false
+  ) {
+    let { r, g, b } = hsvToRgb(h, s, v);
+    return toString ? { r, g, b } : `rgb(${r}, ${g}, ${b})`;
   }
 }

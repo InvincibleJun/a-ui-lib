@@ -6,13 +6,14 @@
 </template>
 
 <script>
-import drag from './drag'
+import drag from "../../utils/drag";
 
 export default {
   data() {
     return {
+      unbind: () => {},
       left: 0
-    }
+    };
   },
 
   props: {
@@ -21,27 +22,47 @@ export default {
 
   computed: {
     style() {
-      let { r, g, b } = this.color.get()
-      return {background: `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0) 0%, rgb(${r}, ${g}, ${b}) 100%)`}
+      let { r, g, b } = this.color.getRgb();
+      return {
+        background: `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0) 0%, rgb(${r}, ${g}, ${b}) 100%)`
+      };
     }
   },
 
   methods: {
-    
+    init() {
+      let { left, width } = this.$el.getBoundingClientRect();
+      this.left = (this.color._alpha / 100) * width;
+    },
+
     change(e) {
-      let { width, height, left, top } = this.$el.getBoundingClientRect()
+      let { width, left, top } = this.$el.getBoundingClientRect();
       let tmpLeft = e.clientX - left;
-      tmpLeft = Math.min(width, tmpLeft)
-      tmpLeft = Math.max(0, tmpLeft); 
-      
-      this.left = tmpLeft;     
-      let alpha = Math.round(this.left / width * 100)
-      this.color.set('alpha', alpha)
+      tmpLeft = Math.min(width, tmpLeft);
+      tmpLeft = Math.max(0, tmpLeft);
+
+      this.left = tmpLeft;
+      let alpha = Math.round((this.left / width) * 100);
+      this.color.set("alpha", alpha);
     }
   },
-  
+
+  watch: {
+    "$parent.show"(nv) {
+      if (nv) {
+        this.$nextTick(() => {
+          this.init();
+        });
+      }
+    }
+  },
+
   mounted() {
-    drag(this.$el, this.change)
+    this.unbind = drag(this.$el, this.change);
+  },
+
+  destroyed() {
+    this.unbind();
   }
-}
+};
 </script>

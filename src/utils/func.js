@@ -20,3 +20,7 @@ export const debounce = function(fn, delay) {
 export const createEmptyArray = function(l) {
   return 'x'.repeat(l).split('')
 }
+
+export const inUndefined = function(v) {
+  return typeof v === 'undefined'
+}
