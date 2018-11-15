@@ -21,6 +21,6 @@ export const createEmptyArray = function(l) {
   return 'x'.repeat(l).split('')
 }
 
-export const inUndefined = function(v) {
+export const isUndefined = function(v) {
   return typeof v === 'undefined'
 }

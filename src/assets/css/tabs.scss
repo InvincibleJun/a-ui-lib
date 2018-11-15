@@ -1,0 +1,62 @@
+$namespace: c-tabs;
+$active-color: #2d8cf0;
+
+.#{$namespace}-wrapper {
+  font-size: 0;
+}
+
+.#{$namespace}-nav {
+  padding-bottom: 10px;
+}
+
+.#{$namespace}-label {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 20px;
+  color: #333333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+
+  &.#{$namespace}-active {
+    color: $active-color;
+  }
+
+  &:hover {
+    color: $active-color;
+  }
+}
+
+.#{$namespace}-item-container {
+  padding: 0 20px;
+  font-size: 16px;
+}
+
+.#{$namespace}-line-container {
+  width: 100%;
+  background-color: #dcdee2;
+  height: 1px;
+  position: relative;
+  & > div {
+    height: 200%;
+    background-color: $active-color;
+  }
+  .c-tabs-line-animated {
+    transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+}
+
+.#{$namespace}-card {
+  border-radius: 4px 4px 0 0;
+  background-color: #f8f8f9;
+  border: 1px solid #dcdee2;
+  margin: 0 4px;
+  border-bottom: 0px;
+  padding: 5px 20px;
+  text-align: center;
+  &.#{$namespace}-active {
+    color: $active-color;
+    background-color: #fff;
+    border-bottom-color: #fff;
+  }
+}

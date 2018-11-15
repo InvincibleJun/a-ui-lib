@@ -8,3 +8,9 @@ export const isColor = function(val) {
 export const isPlacement = function(val) {
   return /^(auto|top|right|bottom|left)(-start|-end)?$/.test(val);
 };
+
+export const oneInArray = function(arr) {
+  return function(val) {
+    return arr.indexOf(val) !== -1;
+  };
+};

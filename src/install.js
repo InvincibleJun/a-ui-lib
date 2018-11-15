@@ -9,6 +9,8 @@ import Colorpicker from "./components/colorpicker/index";
 import Dropdown from "./components/dropdown/index";
 import DropdownItem from "./components/dropdown-item/index";
 import Datepicker from "./components/datepicker/index";
+import Tabs from "./components/tabs/index";
+import TabsItem from "./components/tabs-item/index";
 
 let _Vue;
 
@@ -36,6 +38,10 @@ export default function install(Vue) {
   Vue.component(DropdownItem.name, DropdownItem);
 
   Vue.component(Datepicker.name, Datepicker);
+
+  Vue.component(Tabs.name, Tabs);
+
+  Vue.component(TabsItem.name, TabsItem);
 
   Vue.prototype.$LoadingBar = LoadingBar;
 }

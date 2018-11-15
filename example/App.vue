@@ -1,8 +1,12 @@
 <template>
-  <div style="margin-left: 300px; height: 200px;width: 200px">
-    <!-- <c-button @click="c" :disabled="true">aa</c-button> -->
-    <!-- <c-loading :show="true" ></c-loading> -->
-    <c-datepicker v-model="value"/>
+  <div>
+    <c-tabs v-model="value">
+      <c-tabs-item label="a">1</c-tabs-item>
+      <c-tabs-item label="b">2</c-tabs-item>
+      <c-tabs-item label="c">3</c-tabs-item>
+      <c-tabs-item label="d">4</c-tabs-item>
+      <c-tabs-item label="5">5</c-tabs-item>
+    </c-tabs>
   </div>
 </template>
 
@@ -11,7 +15,7 @@ export default {
   data() {
     return {
       v: 20,
-      value: ""
+      value: "b"
     };
   },
   methods: {

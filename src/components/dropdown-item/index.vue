@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { inUndefined } from "../../utils/func";
+import { isUndefined } from "../../utils/func";
 
 export default {
   name: "c-dropdown-item",
@@ -42,7 +42,7 @@ export default {
       this.$parent.setActive(this.index);
     },
     handlerClick() {
-      this.$parent.select(inUndefined(this.value) ? this.index : this.value);
+      this.$parent.select(isUndefined(this.value) ? this.index : this.value);
     }
   }
 };
