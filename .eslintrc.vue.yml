@@ -1,0 +1,260 @@
+parser: vue-eslint-parser
+parserOptions:
+  parser: 'babel-eslint'
+  ecmaVersion: 2018
+  # 支持es6模块规范
+  sourceType: module
+plugins:
+  - vue
+rules:
+  ########################################################################
+  ###                              Essential                           ###
+  ########################################################################
+
+  # 计算属性禁止promise或者await等异步语法
+  vue/no-async-in-computed-properties:
+    - error
+  # 禁止data/method/props/computed出现相同的key
+  vue/no-dupe-keys:
+    - error
+  # 禁止传递相同props，style/class除外
+  vue/no-duplicate-attributes:
+    - error
+    - allowCoexistClass: true
+      allowCoexistStyle: true
+  # template模块错误检查
+  vue/no-parsing-error:
+    - error
+    - abrupt-closing-of-empty-comment: true
+      absence-of-digits-in-numeric-character-reference: true
+      cdata-in-html-content: true
+      character-reference-outside-unicode-range: true
+      control-character-in-input-stream: true
+      control-character-reference: true
+      eof-before-tag-name: true
+      eof-in-cdata: true
+      eof-in-comment: true
+      eof-in-tag: true
+      incorrectly-closed-comment: true
+      incorrectly-opened-comment: true
+      invalid-first-character-of-tag-name: true
+      missing-attribute-value: true
+      missing-end-tag-name: true
+      missing-semicolon-after-character-reference: true
+      missing-whitespace-between-attributes: true
+      nested-comment: true
+      noncharacter-character-reference: true
+      noncharacter-in-input-stream: true
+      null-character-reference: true
+      surrogate-character-reference: true
+      surrogate-in-input-stream: true
+      unexpected-character-in-attribute-name: true
+      unexpected-character-in-unquoted-attribute-value: true
+      unexpected-equals-sign-before-attribute-name: true
+      unexpected-null-character: true
+      unexpected-question-mark-instead-of-tag-name: true
+      unexpected-solidus-in-tag: true
+      unknown-named-character-reference: true
+      end-tag-with-attributes: true
+      duplicate-attribute: true
+      end-tag-with-trailing-solidus: true
+      non-void-html-element-start-tag-with-trailing-solidus: false
+      x-invalid-end-tag: true
+      x-invalid-namespace: true
+  # 禁止使用vue关键字做变量名
+  vue/no-reserved-keys:
+    - error
+  # data必须时函数
+  vue/no-shared-component-data:
+    - error
+  # 计算属性内简直出现副作用代码
+  vue/no-side-effects-in-computed-properties:
+    - error
+  # 多个同级template有key
+  vue/no-template-key:
+    - error
+  # textrea标签内禁止出现模板语法
+  vue/no-textarea-mustache:
+    - error
+  # 检查未使用的component
+  vue/no-unused-components:
+    - off
+  # v-for声明的变量必须使用
+  vue/no-unused-vars:
+    - error
+  # 禁止v-for和v-if连用，但v-if允许使用和v-for关联变量
+  vue/no-use-v-if-with-v-for:
+    - error
+    - allowUsingIterationVar: true
+  # component标签必须包含is属性
+  vue/require-component-is:
+    - error
+  # render函数必须return
+  vue/require-render-return:
+    - error
+  # v-for必须包含key
+  vue/require-v-for-key:
+    - error
+  # default-props类型检查
+  vue/require-valid-default-prop:
+    - error
+  # computed必须包含return
+  vue/return-in-computed-property:
+    - error
+  # v-on强制使用修饰符
+  vue/use-v-on-exact:
+    - off
+  # template必须包含一个根标签
+  vue/valid-template-root:
+    - error
+  # v-bind语法合法性检查
+  vue/valid-v-bind:
+    - error
+  # v-cloak语法检查
+  vue/valid-v-cloak:
+    - error
+  # v-else-if语法检查
+  vue/valid-v-else-if:
+    - error
+  # v-else语法检查
+  vue/valid-v-else:
+    - error
+  # v-for语法检查
+  vue/valid-v-for:
+    - error
+  # v-html语法检查
+  vue/valid-v-html:
+    - error
+  # v-if语法检查
+  vue/valid-v-if:
+    - error
+  # v-model语法检查
+  vue/valid-v-model:
+    - error
+  # v-on语法检查
+  vue/valid-v-on:
+    - error
+  # v-once语法检查
+  vue/valid-v-once:
+    - error
+  # v-pre语法检查
+  vue/valid-v-pre:
+    - error
+  # v-show语法检查
+  vue/valid-v-show:
+    - error
+  # v-text语法检查
+  vue/valid-v-text:
+    - error
+
+  ########################################################################
+  ###                       Strongly Recommended                       ###
+  ########################################################################
+
+  # 标签的prop必须短线连接
+  vue/attribute-hyphenation:
+    - error
+    - always
+  # 模板内组件名必须大驼峰
+  vue/component-name-in-template-casing:
+    - error
+    - PascalCase
+  # 单行标签>不换行，多行>换行
+  vue/html-closing-bracket-newline:
+    - error
+    - singleline: never
+      multiline: always
+  # 标签闭合>前不允许空格
+  vue/html-closing-bracket-spacing:
+    - error
+  # 闭标签检查
+  vue/html-end-tags:
+    - error
+  # 缩进控制
+  vue/html-indent:
+    - error
+    - 2
+    - attribute: 1
+  # 模板内强制双引号
+  vue/html-quotes:
+    - error
+    - double
+  # 自行闭标签
+  vue/html-self-closing:
+    - error
+    - html:
+        void: never
+        normal: always
+        component: always
+      svg: always
+      math: always
+  # 单行最大属性
+  vue/max-attributes-per-line:
+    - error
+    - singleline: 1
+      multiline:
+        max: 1
+        allowFirstLine: false
+  # 标签内文本内容换行
+  vue/multiline-html-element-content-newline:
+    - error
+    - ignoreWhenEmpty: true
+      ignores:
+        - pre
+        - textarea
+  # {{}}内前后空格
+  vue/mustache-interpolation-spacing:
+    - error
+    - always
+  # 组件name规范大驼峰
+  vue/name-property-casing:
+    - error
+    - PascalCase
+  # 禁止标签内多余的空格
+  vue/no-multi-spaces:
+    - error
+  # 标签属性等号前后禁止空格
+  vue/no-spaces-around-equal-signs-in-attribute:
+    - error
+  # 禁止v-for作用域声明相同变量
+  vue/no-template-shadow:
+    - error
+  # props声明必须小驼峰
+  vue/prop-name-casing:
+    - error
+    - camelCase
+  # props声明必须包含default
+  vue/require-default-prop:
+    - off
+  # props必须声明type
+  vue/require-prop-types:
+    - error
+  # html正文/注释必须换行
+  vue/singleline-html-element-content-newline:
+    - error
+  # v-bind必须省略
+  vue/v-bind-style:
+    - error
+    - shorthand
+  # v-on必须省略
+  vue/v-on-style:
+    - error
+    - shorthand
+
+  ########################################################################
+  ###                             Recommended                          ###
+  ########################################################################
+
+  # props属性排序
+  vue/attributes-order:
+    - off
+  # 禁止使用v-html
+  vue/no-v-html:
+    - error
+  # 组件属性排序
+  vue/order-in-components:
+    - error
+  # 禁止template内使用this
+  vue/this-in-template:
+    - error
+    - never

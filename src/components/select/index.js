@@ -1,48 +1,53 @@
-import Dropdwon from '../dropdown'
+import Dropdwon from '../dropdown';
 
 export default {
   data() {
-    return {}
+    return {};
   },
 
-  components: {
-    Dropdwon
-  },
+  components: { Dropdwon },
 
-  props: {
-    value: [String, Number]
-  },
+  props: { value: [String, Number] },
 
   methods: {
-    open() {}
+    open() {
+
+    //
+    }
   },
 
   created() {
-    // if (this.$slots.default) {
-    //   console.log(this)
-    // }
+
+    /*
+     * if (this.$slots.default) {
+     *   console.log(this)
+     * }
+     */
   },
 
   mounted() {
-    let { left, top, height } = this.$el.getBoundingClientRect()
+    const {
+      // eslint-disable-next-line no-unused-vars
+      left, top, height
+    } = this.$el.getBoundingClientRect();
   },
 
   render() {
     return (
       <div>
         <input
-          class="c-input"
+          class='c-input'
           value={this.value}
           readonly
-          style="width:300px"
+          style='width:300px'
         />
 
-        <transition name="modal-fade">
-          <ul class="c-dropdown-menu" style="style" v-if="show">
-            <slot name="menu" />
+        <transition name='modal-fade'>
+          <ul class='c-dropdown-menu' style='style' v-if='show'>
+            <slot name='menu' />
           </ul>
         </transition>
       </div>
-    )
+    );
   }
-}
+};

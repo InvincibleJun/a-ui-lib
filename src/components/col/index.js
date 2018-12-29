@@ -1,9 +1,12 @@
 export default {
+  name: 'CCol',
+
   props: {
     spans: {
       type: Number,
       default: 24
     },
+    offset: { type: Number },
     xs: Number,
     sm: Number,
     md: Number,
@@ -13,34 +16,38 @@ export default {
 
   methods: {
     getStyle() {
-      let width = this.$parent.gutter
+      const width = this.$parent.gutter;
+
       return width
-        ? { paddingLeft: width / 2 + 'px', paddingRight: width / 2 + 'px' }
-        : {}
+        ? {
+          paddingLeft: `${ width / 2 }px`,
+          paddingRight: `${ width / 2 }px`
+        }
+        : {};
     },
 
     getClassName() {
-      let classArr = ['c-col', `c-col-${this.spans}`]
+      const classArr = ['c-col', `c-col-${ this.spans }`];
 
       if (this.offset) {
-        classArr.push(`c-col-offset-${this.offset}`)
+        classArr.push(`c-col-offset-${ this.offset }`);
       }
 
-      ;['xs', 'sm', 'md', 'lg', 'xl'].forEach(s => {
+      ['xs', 'sm', 'md', 'lg', 'xl'].forEach(s => {
         if (this[s]) {
-          classArr.push(`c-col-${s}-${this[s]}`)
+          classArr.push(`c-col-${ s }-${ this[s] }`);
         }
-      })
+      });
 
-      return classArr.join(' ')
+      return classArr.join(' ');
     }
   },
 
-  render(h) {
+  render() {
     return (
       <div class={this.getClassName()} style={this.getStyle()}>
         {this.$slots.default}
       </div>
-    )
+    );
   }
-}
+};

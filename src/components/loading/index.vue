@@ -1,16 +1,31 @@
 <template>
-  <div class="c-loading-container" v-show="showContainer">
-    <transition v-if="wrapper" name="c-fade">
-      <div class="c-loading-wrapper" ref="c-loading-window" v-show="show" :style="{opacity, backgroundColor: color}" />
-    </transition>
-    <transition name="c-fade">
-      <div class="c-loading-window" v-show="show" :style="{transform: `scale(${scale}) translate(-50%, -50%)`}">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+  <div
+    class="c-loading-container"
+    v-show="showContainer"
+  >
+    <Transition
+      v-if="wrapper"
+      name="c-fade"
+    >
+      <div
+        class="c-loading-wrapper"
+        ref="c-loading-window"
+        v-show="show"
+        :style="{opacity, backgroundColor: color}"
+      />
+    </Transition>
+    <Transition name="c-fade">
+      <div
+        class="c-loading-window"
+        v-show="show"
+        :style="{transform: `scale(${scale}) translate(-50%, -50%)`}"
+      >
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>
 
@@ -23,33 +38,7 @@ const map = {
 };
 
 export default {
-  name: "c-loading",
-  data() {
-    return {
-      timer: null,
-      showContainer: false
-    };
-  },
-  computed: {
-    scale() {
-      return typeof this.size === "string" ? map[this.size] : this.size;
-    }
-  },
-  watch: {
-    show: {
-      immediate: true,
-      handler(nv) {
-        if (nv) {
-          clearTimeout(this.timer);
-          this.showContainer = true;
-        } else {
-          this.timer = setTimeout(() => {
-            this.showContainer = false;
-          }, 0.5);
-        }
-      }
-    }
-  },
+  name: 'CLoading',
   props: {
     show: {
       type: Boolean,
@@ -65,20 +54,48 @@ export default {
     },
     color: {
       type: String,
-      default: "#ccc"
+      default: '#ccc'
     },
     size: {
-      validator: function(value) {
+      validator(value) {
         switch (typeof value) {
-          case "number":
-            return number > 0;
-          case "string":
-            return Object.keys(map).includes(value);
-          default:
-            return false;
+        case 'number':
+          return 0 < value;
+        case 'string':
+          return Object.keys(map).includes(value);
+        default:
+          return false;
         }
       },
-      default: "normal"
+      default: 'normal'
+    }
+  },
+  data() {
+    return {
+      timer: null,
+      showContainer: false
+    };
+  },
+  computed: {
+    scale() {
+      return 'string' === typeof this.size
+        ? map[this.size]
+        : this.size;
+    }
+  },
+  watch: {
+    show: {
+      immediate: true,
+      handler(nv) {
+        if (nv) {
+          clearTimeout(this.timer);
+          this.showContainer = true;
+        } else {
+          this.timer = setTimeout(() => {
+            this.showContainer = false;
+          }, 0.5);
+        }
+      }
     }
   }
 };

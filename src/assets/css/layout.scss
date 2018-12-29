@@ -1,3 +1,5 @@
+@import './mixins.scss';
+
 .c-row {
   position: relative;
   box-sizing: border-box;
@@ -21,12 +23,7 @@ $align: center flex-start flex-end;
   }
 }
 
-.c-row:before,
-.c-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
+@include clearfix('.c-row');
 
 @for $i from 1 through 24 {
   .c-col-#{$i} {

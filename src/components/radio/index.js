@@ -7,41 +7,41 @@ export default {
   name: 'radio',
 
   data() {
-    return {
-      group: null
-    }
+    return { group: null };
   },
 
   computed: {
     selected() {
-      return this.label === (this.inGroup ? this.group.value : this.value)
+      return this.label === (this.inGroup ? this.group.value : this.value);
     },
 
     radioClassName() {
-      return ['c-radio', this.selected ? 'is-checked' : '']
+      return ['c-radio', this.selected ? 'is-checked' : ''];
     },
 
     inGroup() {
-      let parent = this.$parent
+      let parent = this.$parent;
 
       while (parent) {
-        if (parent.$options.name !== 'group') {
-          parent = parent.$parent
+        if ('group' !== parent.$options.name) {
+          parent = parent.$parent;
         } else {
-          this.group = parent
-          return true
+          this.group = parent;
+
+          return true;
         }
       }
-      return false
+
+      return false;
     }
   },
 
   methods: {
     handlerClick() {
       if (this.inGroup) {
-        this.group.input(this.label)
+        this.group.input(this.label);
       } else {
-        this.$emit('input', this.label)
+        this.$emit('input', this.label);
       }
     }
   },
@@ -49,15 +49,15 @@ export default {
   render() {
     return (
       <label
-        role="radios"
+        role='radios'
         class={this.radioClassName}
         onClick={() => this.handlerClick()}
       >
-        <span class="c-raido-selection">
-          <input class="c-radio-input" value={this.label} type="radio" />
+        <span class='c-raido-selection'>
+          <input class='c-radio-input' value={this.label} type='radio' />
         </span>
-        <span class="c-radio-text">{this.$slots.default}</span>
+        <span class='c-radio-text'>{this.$slots.default}</span>
       </label>
-    )
+    );
   }
-}
+};

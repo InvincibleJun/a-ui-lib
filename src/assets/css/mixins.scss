@@ -1,0 +1,21 @@
+/** 
+ * mixins
+**/
+
+/* 清除浮动 */
+@mixin clearfix($name) {
+  #{$name}:before,
+  #{$name}:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+
+.a::before,
+.a::after {
+  clear: both;
+  content: '';
+  display: table;
+}

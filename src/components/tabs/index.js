@@ -1,11 +1,11 @@
-import { oneInArray } from "../../utils/valid-prop";
+import { oneInArray } from '../../utils/valid-prop';
 
-const TYPES = ["line"];
+const TYPES = ['line'];
 
-const POSITIONS = ["left", "top", "right", "bottom"];
+const POSITIONS = ['left', 'top', 'right', 'bottom'];
 
 export default {
-  name: "c-tabs",
+  name: 'c-tabs',
 
   data() {
     return {
@@ -25,12 +25,12 @@ export default {
     position: {
       type: String,
       validate: oneInArray(POSITIONS),
-      default: "top"
+      default: 'top'
     },
     type: {
       type: String,
       validate: oneInArray(TYPES),
-      default: "card"
+      default: 'card'
     },
     animated: {
       type: Boolean,
@@ -40,21 +40,26 @@ export default {
 
   methods: {
     getChilds() {
-      return this.$children.filter(v => v.$options.name === "c-tabs-item");
+      return this.$children.filter(v => 'c-tabs-item' === v.$options.name);
     },
 
     activeItem(index, label) {
       this.activeIndex = index;
       this.$nextTick(() => {
-        this.active = label ? label : this.list[index];
-        let { width } = this.$refs[this.active].getBoundingClientRect();
+        this.active = label
+          ? label
+          : this.list[index];
+        const { width } = this.$refs[this.active].getBoundingClientRect();
+
         this.activeWidth = width;
       });
     },
 
     container() {
-      let classNames = [];
-      return <div class={`c-tabs-conatiner-${this.position}`} />;
+
+      // const classNames = [];
+
+      return <div class={`c-tabs-conatiner-${ this.position }`} />;
     },
 
     updateBar() {
@@ -63,16 +68,18 @@ export default {
 
     renderNav() {
       return this.list.map((label, index) => {
-        let classNames = ["c-tabs-label"];
+        const classNames = ['c-tabs-label'];
+
         if (index === this.activeIndex) {
-          classNames.push("c-tabs-active");
+          classNames.push('c-tabs-active');
         }
         if (this.animated) {
-          classNames.push("c-tabs-label-aniamted");
+          classNames.push('c-tabs-label-aniamted');
         }
-        if (this.type === "card") {
-          classNames.push("c-tabs-card");
+        if ('card' === this.type) {
+          classNames.push('c-tabs-card');
         }
+
         return (
           <div
             class={classNames}
@@ -87,15 +94,18 @@ export default {
 
     renderLine() {
       const props = {
-        class: this.animated ? "c-tabs-line-animated" : "",
+        class: this.animated
+          ? 'c-tabs-line-animated'
+          : '',
         style: {
-          width: this.activeWidth + "px",
-          transform: `translateX(${this.left}px)`
+          width: `${ this.activeWidth }px`,
+          transform: `translateX(${ this.left }px)`
         }
       };
+
       return (
-        <div class="c-tabs-line-container">
-          {this.type === "line" && <div {...props} />}
+        <div class='c-tabs-line-container'>
+          {'line' === this.type && <div {...props} />}
         </div>
       );
     }
@@ -113,6 +123,7 @@ export default {
         this.$nextTick(() => {
           this.left = this.list.slice(0, nv).reduce((accu, curr) => {
             const { width } = this.$refs[curr].getBoundingClientRect();
+
             return accu + width;
           }, 0);
         });
@@ -123,14 +134,15 @@ export default {
 
   mounted() {
     this.updateBar();
-    let index = this.list.findIndex(v => v === this.active);
+    const index = this.list.findIndex(v => v === this.active);
+
     this.activeItem(index);
   },
 
   render() {
     return (
-      <div class="c-tabs-wrapper">
-        <div class="c-tabs-nav">
+      <div class='c-tabs-wrapper'>
+        <div class='c-tabs-nav'>
           {this.renderNav()}
           {this.renderLine()}
         </div>

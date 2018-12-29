@@ -1,3 +1,5 @@
+const oP = Object.prototype;
+
 /**
  *
  * @param fn {Function}   实际要执行的函数
@@ -6,21 +8,67 @@
  * @return {Function}
  */
 export const debounce = function(fn, delay) {
-  var timer
+  let timer;
+
   return function() {
-    var context = this
-    var args = arguments
-    clearTimeout(timer)
-    timer = setTimeout(function() {
-      fn.apply(context, [timer, ...args])
-    }, delay)
-  }
-}
+    // eslint-disable-next-line
+    const context = this;
+
+    // eslint-disable-next-line prefer-rest-params
+    const args = arguments;
+
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(context, [timer, ...args]);
+    }, delay);
+  };
+};
 
 export const createEmptyArray = function(l) {
-  return 'x'.repeat(l).split('')
-}
+  return 'x'.repeat(l).split('');
+};
 
+/**
+ * 判断变量是否undefined
+ * @param {any} v
+ * @return {boolean}
+ */
 export const isUndefined = function(v) {
-  return typeof v === 'undefined'
-}
+  return typeof v === 'undefined';
+};
+
+/**
+ * 判断对象是否存在属性
+ * @param {object} o 对象
+ * @param {string} k 属性
+ * @return {boolean}
+ */
+export const hasKey = function(o, k) {
+  return oP.hasOwnProperty.call(o, k);
+};
+
+export const isArray = function(o) {
+  return oP.toString.call(o) === '[object Array]';
+};
+
+
+/**
+ * 判断数组是否包含目标
+ * @param {array} o  
+ * @param {any} target 
+ * @return {boolean}
+ */
+export const oneOf = function(o, target) {
+  if (isArray(o)) {
+    for (let i = 0, l = o.length; i < l; i++) {
+      if (o[i] === target) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  return false;
+};
+

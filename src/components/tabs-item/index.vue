@@ -1,27 +1,30 @@
 <template>
-  <div class="c-tabs-item-container" v-if="show">
-    <slot></slot>
+  <div
+    class="c-tabs-item-container"
+    v-if="show"
+  >
+    <slot />
   </div>
 </template>
 
 <script>
-import { isUndefined } from "../../utils/func";
+
+// import { isUndefined } from '../../utils/func';
 
 let uuid;
-export default {
-  name: "c-tabs-item",
 
-  data() {
-    return {
-      width: 0
-    };
-  },
+export default {
+  name: 'CTabsItem',
 
   props: {
     label: {
       type: [String, Number],
       required: true
     }
+  },
+
+  data() {
+    return { width: 0 };
   },
 
   computed: {
@@ -39,17 +42,24 @@ export default {
           return i;
         }
       }
+
       return ++uuid;
     }
   },
 
   mounted() {
-    // let { width } = this.$el.getBoundingClientRect();
-    // this.width = width;
+
+    /*
+     * let { width } = this.$el.getBoundingClientRect();
+     * this.width = width;
+     */
   },
 
   methods: {
-    paneOnClick() {}
+    paneOnClick() {
+
+    // 
+    }
   }
 };
 </script>

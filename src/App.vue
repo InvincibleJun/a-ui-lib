@@ -3,29 +3,29 @@
     <div style="width: 200px;height: 200px">
       <Loading :show="show" />
     </div>
-    <button @click="show=!show">点我</button>
+    <button @click="show=!show">
+      点我
+    </button>
   </div>
 </template>
 
 <script>
 
 export default {
-  components: {
-    Loading
-  },
   name: 'App',
+  components: { },
   data() {
     return {
       value: '1',
       show: false
-    }
+    };
   },
   watch: {
-    value(nV, oV) {
-      console.log(nV)
+    value(nV) {
+      console.log(nV);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -47,7 +47,6 @@ input {
 }
 
 
-
 div {
   box-sizing: border-box;
 }
@@ -61,8 +60,8 @@ div {
 }
 /*table start*/
 .default-table {
-  /* -moz-border-radius: 5px;  
-    -webkit-border-radius:5px;  
+  /* -moz-border-radius: 5px;
+    -webkit-border-radius:5px;
     border-radius:5px; */
   width: 100%;
   border: solid #333;

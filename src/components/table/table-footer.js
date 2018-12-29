@@ -1,5 +1,5 @@
 export default {
   render(h) {
-    return h('div', null, 'head')
+    return h('div', null, 'head');
   }
-}
+};

@@ -22,8 +22,12 @@ export const addEvent = function(ele, eventName, cb) {
 
 export const checkInComponent = function(target, ele) {
   while (target) {
-    if (ele === target) return true;
-    if (target === document.body) return false;
+    if (ele === target) {
+      return true;
+    }
+    if (target === document.body) {
+      return false;
+    }
     target = target.parentNode;
   }
 };

@@ -1,5 +1,6 @@
 export default {
-  data() {},
+
+  // data() {},
 
   props: {
     value: {
@@ -15,16 +16,17 @@ export default {
 
   methods: {
     selected() {
-      console.log(this.value)
+      console.log(this.value);
     }
   },
 
   render() {
-    const { label } = this
+    const { label } = this;
+
     return (
-      <div class="c-select-option" onClick={this.selected}>
+      <div class='c-select-option' onClick={this.selected}>
         {label}
       </div>
-    )
+    );
   }
-}
+};

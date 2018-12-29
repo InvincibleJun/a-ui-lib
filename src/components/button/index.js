@@ -1,5 +1,5 @@
 export default {
-  name: "c-button",
+  name: 'c-button',
 
   props: {
     type: String,
@@ -11,15 +11,17 @@ export default {
 
   methods: {
     getClassNames() {
-      let classArr = ["c-button"];
+      const classArr = ['c-button'];
+
       if (this.disabled) {
-        classArr.push("c-button-is-disabled");
+        classArr.push('c-button-is-disabled');
       }
+
       return classArr;
     },
 
     handlerClick(e) {
-      this.$emit("click", e);
+      this.$emit('click', e);
     }
   },
 
@@ -28,7 +30,7 @@ export default {
       <button
         onClick={this.handlerClick}
         disabled={this.disabled}
-        type="button"
+        type='button'
         class={this.getClassNames()}
       >
         {this.$slots.default}

@@ -1,12 +1,10 @@
-import { isColor } from "../../utils/valid-prop";
+import { isColor } from '../../utils/valid-prop';
 
 export default {
-  name: "c-progress",
+  name: 'c-progress',
 
   data() {
-    return {
-      circle: null
-    };
+    return { circle: null };
   },
 
   props: {
@@ -14,10 +12,11 @@ export default {
       type: Number,
       required: true
     },
+
     // line, circle
     type: {
       type: String,
-      default: "line"
+      default: 'line'
     },
 
     width: {
@@ -47,13 +46,13 @@ export default {
 
     color: {
       type: String,
-      default: "#67c23a",
+      default: '#67c23a',
       validator: isColor
     },
 
     bgColor: {
       type: String,
-      default: "#ebeef5",
+      default: '#ebeef5',
       validator: isColor
     }
   },
@@ -61,7 +60,7 @@ export default {
   watch: {
     percentage(nv) {
       if (nv === 100) {
-        this.$emit("on-finished", 100);
+        this.$emit('on-finished', 100);
       }
     }
   },
@@ -73,26 +72,26 @@ export default {
 
     lineStyle() {
       return {
-        width: this.percentage + "%",
-        borderRadius: this.height / 2 + "px",
+        width: `${ this.percentage }%`,
+        borderRadius: `${ this.height / 2 }px`,
         backgroundColor: this.color
       };
     },
 
     strokeDash() {
-      return `${this.length} ${this.length}`;
+      return `${ this.length } ${ this.length }`;
     },
 
     svgCircleD() {
-      return `M 50 50 m 0 -${this.svgRadius} a ${this.svgRadius} ${
+      return `M 50 50 m 0 -${ this.svgRadius } a ${ this.svgRadius } ${
         this.svgRadius
-      } 0 0 0 0 ${this.svgRadius * 2} a ${this.svgRadius} ${
+      } 0 0 0 0 ${ this.svgRadius * 2 } a ${ this.svgRadius } ${
         this.svgRadius
-      } 0 1 0 0 -${this.svgRadius * 2}`;
+      } 0 1 0 0 -${ this.svgRadius * 2 }`;
     },
 
     svgStrokeWidth() {
-      return (this.strokeWidth / this.width) * 100;
+      return this.strokeWidth / this.width * 100;
     },
 
     svgRadius() {
@@ -105,17 +104,20 @@ export default {
 
     dashoffset() {
       return this.circle
-        ? this.length - (this.percentage / 100) * this.length
+        // eslint-disable-next-line no-mixed-operators
+        ? this.length - this.percentage / 100 * this.length
         : this.length;
     },
 
     getTextClass() {
-      let classNames = ["c-progress-text"];
-      if (this.type === "circle") {
-        classNames.push("c-progress-text-circle");
+      const classNames = ['c-progress-text'];
+
+      if (this.type === 'circle') {
+        classNames.push('c-progress-text-circle');
       } else if (!this.textInside) {
-        classNames.push("c-progress-text-out");
+        classNames.push('c-progress-text-out');
       }
+
       return classNames;
     }
   },
@@ -132,64 +134,75 @@ export default {
 
   methods: {
     getLineClass() {
-      let classes = ["c-progress-line-bar"];
-      !this.textInside && classes.push("c-progress-line-not-inside");
-      return classes.join(" ");
+      const classes = ['c-progress-line-bar'];
+
+      // eslint-disable-next-line no-unused-expressions
+      !this.textInside && classes.push('c-progress-line-not-inside');
+
+      return classes.join(' ');
     }
   },
 
-  render(h) {
-    const { type, textInside, percentage } = this;
-    const text = (
-      <div class={this.getTextClass} style={{ lineHeight: this.height + "px" }}>
+  render() {
+    const {
+      type, textInside, percentage
+    } = this;
+
+    const text
+      = <div class={this.getTextClass} style={{ lineHeight: `${ this.height }px` }}>
         {percentage}%
-      </div>
-    );
-    if (type === "line") {
+      </div>;
+
+    if (type === 'line') {
       return (
         <div
-          class="c-progress-line-wrapper"
+          class='c-progress-line-wrapper'
           style={{
-            paddingRight: !textInside ? 50 + "px" : 0
+            paddingRight: !textInside
+              ? `${ 50 }px`
+              : 0
           }}
         >
           <div
-            class="c-progress-line-bar"
+            class='c-progress-line-bar'
             style={{
               backgroundColor: this.bgColor,
-              borderRadius: this.height / 2 + "px",
-              height: this.height + "px"
+              borderRadius: `${ this.height / 2 }px`,
+              height: `${ this.height }px`
             }}
           >
-            <div class="c-progress-line-percentage" style={this.lineStyle}>
+            <div class='c-progress-line-percentage' style={this.lineStyle}>
               {textInside && text}
             </div>
           </div>
           {text}
         </div>
       );
-    } else if (type === "circle") {
+    } else if (type === 'circle') {
       return (
         <div
-          class="c-progress-circle"
-          style={{ width: this.width + "px", height: this.width + "px" }}
+          class='c-progress-circle'
+          style={{
+            width: `${ this.width }px`,
+            height: `${ this.width }px`
+          }}
         >
-          <svg version="1.1" viewBox="0 0 100 100">
+          <svg version='1.1' viewBox='0 0 100 100'>
             <path
               d={this.svgCircleD}
               stroke={this.bgColor}
-              fill="none"
+              fill='none'
               stroke-width={this.svgStrokeWidth}
             />
             <path
-              stroke-linecap="round"
-              class="c-progress-circle-percentage"
+              stroke-linecap='round'
+              class='c-progress-circle-percentage'
               stroke-dasharray={this.strokeDash}
               stroke-dashoffset={this.dashoffset}
-              ref="circle"
+              ref='circle'
               d={this.svgCircleD}
               stroke={this.color}
-              fill="none"
+              fill='none'
               stroke-width={this.svgStrokeWidth}
             />
           </svg>

@@ -1,3 +1,3 @@
 export default function(string) {
-  window.alert(string)
+  window.alert(string);
 }

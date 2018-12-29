@@ -1,11 +1,9 @@
-import DatePicker from './datepicker'
+import DatePicker from './datepicker';
 
 export default {
   name: 'c-datepicker',
   data() {
-    return {
-      dateValue: ''
-    }
+    return { dateValue: '' };
   },
 
   props: {
@@ -16,17 +14,21 @@ export default {
   },
 
   methods: {
-    formate() {}
+    formate() {
+
+    //
+    }
   },
 
   watch: {
     value(nV) {
       if (typeof nV === 'string') {
-        let d = new Date(nV)
+        const d = new Date(nV);
+
         if (d.toString() === 'Invalid Date') {
-          this.inputValue = ''
+          this.inputValue = '';
         } else {
-          this.inputValue = this.formate(nV)
+          this.inputValue = this.formate(nV);
         }
       }
     }
@@ -34,10 +36,10 @@ export default {
 
   render() {
     return (
-      <div class="c-datepicker-wrapper">
+      <div class='c-datepicker-wrapper'>
         <input value={this.inputValue} />
         <DatePicker value={this.value} />
       </div>
-    )
+    );
   }
-}
+};

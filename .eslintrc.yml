@@ -1,0 +1,937 @@
+env:
+  node: true
+  browser: true
+  commonjs: true
+  es6: true
+extends:
+  - ./.eslintrc.vue.yml
+parserOptions:
+  parser: 'babel-eslint'
+  ecmaVersion: 2018
+  # 支持es6模块规范
+  sourceType: module
+rules:
+  ########################################################################
+  ###                           Possible Errors                        ###
+  ########################################################################
+
+  # for循环检查
+  for-direction:
+    - error
+  # get函数return检测
+  getter-return:
+    - error
+  # promise构造器禁止使用async/await语法
+  no-async-promise-executor:
+    - error
+  # 允许遍历器中使用await/async语法
+  no-await-in-loop:
+    - off
+  # 不允许出现-0
+  no-compare-neg-zero:
+    - error
+  # 禁止条件语句中赋值
+  no-cond-assign:
+    - error
+  # 允许console
+  no-console:
+    - off
+  # 表达式内禁止常量
+  no-constant-condition:
+    - error
+    # 检查循环
+    - checkLoops: true
+  # 禁止正则出现控制字符
+  no-control-regex:
+    - error
+  # 禁止出现debugger
+  no-debugger:
+    - error
+  # 函数参数禁止定义重复变量名
+  no-dupe-args:
+    - error
+  # 禁止定义重复的对象key
+  no-dupe-keys:
+    - error
+  # swtich语句禁止出现相同case
+  no-duplicate-case:
+    - error
+  # 禁止出现空代码块
+  no-empty:
+    - error
+  # 正则表达式禁止出现空[]
+  no-empty-character-class:
+    - error
+  # 禁止在catch重写error
+  no-ex-assign:
+    - error
+  # 禁止出现不必要的布尔转换 --fix
+  no-extra-boolean-cast:
+    - error
+  # 禁止出现不必要的括号 --fix
+  no-extra-parens:
+    - error
+    - all
+  # 禁止出现不必要的分号 --fiex
+  no-extra-semi:
+    - error
+  # 禁止重写已定义函数
+  no-func-assign:
+    - error
+  # 禁止在代码块内申明函数和var定义变量
+  no-inner-declarations:
+    - error
+    - both
+  # RegExp构造器内string检查
+  no-invalid-regexp:
+    - error
+  # 禁止出现非常规编码空白
+  no-irregular-whitespace:
+    - error
+  # 正则内禁止出现组合字符表情
+  no-misleading-character-class:
+    - error
+  # 禁止全局对象作为函数调用
+  no-obj-calls:
+    - error
+  # 禁止直接调用Object内建方法
+  no-prototype-builtins:
+    - error
+  # 禁止正则内使用多个空格 --fix
+  no-regex-spaces:
+    - error
+  # 禁止出现空白数组
+  no-sparse-arrays:
+    - error
+  # 引号字符串内禁止使用模板语法
+  no-template-curly-in-string:
+    - error
+  # 禁止出现混淆的多行表达式
+  no-unexpected-multiline:
+    - error
+  # 禁止在return/throw/continue/break后书写不可执行代码
+  no-unreachable:
+    - error
+  # 禁止finally内使用return/throw/break/continue
+  no-unsafe-finally:
+    - error
+  # 禁止出现意义不明确的!操作符 --fix
+  no-unsafe-negation:
+    - error
+  # 禁止+=和await/yield连用
+  require-atomic-updates:
+    - error
+  # 禁止使用非字符串类型
+  valid-typeof:
+    - error
+    # 必须采用有效枚举
+    - requireStringLiterals: true
+  # 禁止直接比较NaN,使用isNan
+  use-isnan:
+    - error
+
+  ### Best Practices
+
+  # 关闭getter和setter成对出现检测
+  accessor-pairs:
+    - off
+  # 关闭array方法return检查
+  array-callback-return:
+    - off
+  # 块级作用域禁止使用var
+  block-scoped-var:
+    - error
+  # 强制类方式使用this
+  class-methods-use-this:
+    - error
+  # 关闭循环复杂度检查
+  complexity:
+    - off
+  # 关闭return语法返回类型必须一致
+  consistent-return:
+    - off
+  # 禁止单个语句省略大括号 --fix
+  curly:
+    - error
+    # 所有块级作用域
+    - all
+  # switch语句必须具有default
+  default-case:
+    - error
+  # 在点操作符前后前置换行 --fix
+  dot-location:
+    - error
+    # 点操作符前置
+    - property
+  # 尽量使用点操作符读取对象属性 --fix
+  dot-notation:
+    - error
+  # 必须使用===/!== --fix
+  eqeqeq:
+    - error
+    - always
+  # for in 语句时,必须使用hasOwnProperty判断
+  guard-for-in:
+    - error
+  # 关闭检查单个文件内的class定义数量
+  max-classes-per-file:
+    - off
+  # 禁止出现alert/confirm/prompt语句
+  no-alert:
+    - error
+  # 关闭检查arguments.callee/calleer
+  no-caller:
+    - off
+  # 禁止在switch语句声明变量
+  no-case-declarations:
+    - error
+  # 禁止正则表达式开头出现未转义的= --fix
+  no-div-regex:
+    - error
+  # 关闭else/else-if的return检测 --fix
+  no-else-return:
+    - off
+  # 禁止出现空函数
+  no-empty-function:
+    - error
+  # 禁止出现空解构
+  no-empty-pattern:
+    - error
+  # null比较必须使用=== /!==
+  no-eq-null:
+    - error
+  # 禁止使用eval语句
+  no-eval:
+    - error
+  # 禁止扩展原生对象
+  no-extend-native:
+    - error
+  # 禁止使用不必要的bind函数 --fix
+  no-extra-bind:
+    - error
+  # 禁止使用不必要的label --fix
+  no-extra-label:
+    - error
+  # 禁止出现无break的case语句
+  no-fallthrough:
+    - error
+  # 浮点数前后不可省略
+  no-floating-decimal:
+    - error
+  # 禁止重写全局对象/内建对象
+  no-global-assign:
+    - error
+  # 禁止隐式转换 --fix
+  no-implicit-coercion:
+    - error
+    - boolean: false
+  # 禁止全局声明函数变量
+  no-implicit-globals:
+    - error
+  # 禁止隐式使用eval，setTimeout/setInterval/execScript
+  no-implied-eval:
+    - error
+  # 禁止在外部使用this
+  no-invalid-this:
+    - error
+  # 禁止使用迭代器
+  no-iterator:
+    - error
+  # 允许使用label
+  no-labels:
+    - off
+  # 禁止不必要的嵌套块级作用域
+  no-lone-blocks:
+    - error
+  # for循环内不允许创建函数
+  no-loop-func:
+    - error
+  # 关闭强制常量数字定义
+  no-magic-numbers:
+    - off
+    # 忽略数组，常量强制const
+    - ignoreArrayIndexes: true
+      enforceConst: true
+      detectObjects: false
+  # 禁止多个空格 --fix
+  no-multi-spaces:
+    - error
+    # 注释中忽略
+    - ignoreEOLComments: true
+  # 关闭多行string检测
+  no-multi-str:
+    - off
+  # 禁止new操作而不定义变量
+  no-new:
+    - error
+  # 禁止new操作符调用function
+  no-new-func:
+    - error
+  # 禁止new操作符调用String/Number/Boolean
+  no-new-wrappers:
+    - error
+  # 禁止使用八进制数字
+  no-octal:
+    - error
+  # 禁止字符串内转义八进制
+  no-octal-escape:
+    - error
+  # 禁止重新定义函数参数
+  no-param-reassign:
+    - error
+    # 参数属性禁止修改
+    - props: true
+  # 禁止访问__proto__
+  no-proto:
+    - error
+  # 禁止变量重新声明
+  no-redeclare:
+    - error
+    # 检查全局变量的对象是否重写
+    - builtinGlobals: true
+  # 禁止某对象声明某些属性
+  no-restricted-properties:
+    - off
+  # return时禁止赋值
+  no-return-assign:
+    - off
+  # 关闭return不允许await
+  no-return-await:
+    - off
+  # url内禁止注入javascript脚本
+  no-script-url:
+    - error
+  # 禁止对象解析自己
+  no-self-assign:
+    - error
+  # 禁止自我比较
+  no-self-compare:
+    - error
+  # 禁止使用逗号运算符
+  no-sequences:
+    - error
+  # throw必须是一个Error类型
+  no-throw-literal:
+    - error
+  # 死循环检查
+  no-unmodified-loop-condition:
+    - error
+  # 无用表达式检查
+  no-unused-expressions:
+    - error
+  # 禁止非必要的label
+  no-unused-labels:
+    - error
+  # 禁止非必要的call/apply
+  no-useless-call:
+    - error
+  # 禁止非必要的catch
+  no-useless-catch:
+    - error
+  # 禁止没必要的字符串连接
+  no-useless-concat:
+    - error
+  # 禁止没必要的转义
+  no-useless-escape:
+    - error
+  # 禁止没必要的return
+  no-useless-return:
+    - error
+  # 禁止使用void
+  no-void:
+    - error
+  # 关闭警告注释
+  no-warning-comments:
+    - off
+  # 不允许使用with语句
+  no-with:
+    - error
+  # reject必须返回error类型
+  prefer-promise-reject-errors:
+    - error
+    # 允许返回空
+    - allowEmptyReject: true
+  # parseInt必须传递进制
+  radix:
+    - error
+    - always
+  # async函数必须有await关键字
+  require-await:
+    - error
+  # 关闭正则表达式必须写u修饰符
+  require-unicode-regexp:
+    - off
+  # var声明必须置于头部
+  vars-on-top:
+    - error
+  # iife函数执行括号置于外部 --fix
+  wrap-iife:
+    - error
+    - inside
+  # 比较时变量置前 --fix
+  yoda:
+    - error
+    - never
+  strict:
+    - error
+    - never
+
+  ########################################################################
+  ###                              Variables                           ###
+  ########################################################################
+
+  # 允许变量初始化
+  init-declarations:
+    - off
+  # 不允许删除变量
+  no-delete-var:
+    - error
+  # 禁止与变量名重复的label
+  no-label-var:
+    - error
+  # 关闭禁止特定的全局变量
+  no-restricted-globals:
+    - off
+  # 禁止在内部声明外部作用域变量
+  no-shadow:
+    - error
+  # 禁止关键字做变量声明
+  no-shadow-restricted-names:
+    - error
+  # 禁止赋值声明未定义的变量
+  no-undef:
+    - error
+  # 禁止赋值变量为undefined
+  no-undef-init:
+    - error
+  # 禁止重写undefined
+  no-undefined:
+    - error
+  # 禁止声明未使用的变量
+  no-unused-vars:
+    - error
+  # 禁止提前使用声明变量
+  no-use-before-define:
+    - error
+    - variables: false
+
+  ########################################################################
+  ###                              ECMAScript 6                        ###
+  ########################################################################
+
+  # 箭头函数体大括号检查 --fix
+  arrow-body-style:
+    - error
+    # 直接return的除外
+    - as-needed
+  # 箭头函数参数必要性检查 --fix
+  arrow-parens:
+    - error
+    # 仅允许使用的参数
+    - as-needed
+  # 箭头函数是否包含空格 --fix
+  arrow-spacing:
+    - error
+    # =>前后必须包括空格
+    - before: true
+      after: true
+  # 继承类的constructor必须包含super函数 --fix
+  constructor-super:
+    - error
+  # generator函数*前后空格 --fix
+  generator-star-spacing:
+    - error
+    - before: true
+      after: false
+  # 禁止重写类
+  no-class-assign:
+    - error
+  # 禁止箭头函数混淆 --fix
+  no-confusing-arrow:
+    - error
+    # 允许括号
+    - allowParens: true
+  # 禁止重写const定义的变量
+  no-const-assign:
+    - error
+  # 禁止定义重复的类
+  no-dupe-class-members:
+    - error
+  # 禁止重复引入同一模块
+  no-duplicate-imports:
+    - error
+  # 禁止new操作符调用symbol
+  no-new-symbol:
+    - error
+  # 禁止引入模块配置
+  no-restricted-imports:
+    - off
+  # 继承类的super必须置于this上方
+  no-this-before-super:
+    - error
+  # 对象属性禁止出现没必要的计算 --fix
+  no-useless-computed-key:
+    - error
+  # 禁止出现空构造器
+  no-useless-constructor:
+    - error
+  # 禁止对import/export的模块重命名为相同的名字
+  no-useless-rename:
+    - error
+    - ignoreDestructuring: false
+      ignoreImport: false
+      ignoreExport: false
+  # 禁止使用var --fix
+  no-var:
+    - error
+  # 对象/函数必须使用Shorthand语法 --fix
+  object-shorthand:
+    - error
+    - always
+  # 回调函数必须使用箭头函数 --fix
+  prefer-arrow-callback:
+    - error
+    - allowNamedFunctions: false
+      allowUnboundThis: true
+  # 必须使用const的情况 	--fix
+  prefer-const:
+    - error
+    # 解构
+    - destructuring: all
+      ignoreReadBeforeAssign: false
+  # 必须解构
+  prefer-destructuring:
+    - error
+    - array: true
+      object: true
+  # 禁止使用parseInt转换8进制、16进制 --fix
+  prefer-numeric-literals:
+    - error
+  # 使用rest 替代arguments对象
+  prefer-rest-params:
+    - error
+  # apply使用rest代替  --fix
+  prefer-spread:
+    - error
+  # 使用模板字符串替代原始字符串拼接
+  prefer-template:
+    - error
+  # generator函数必须包含yield关键字
+  require-yield:
+    - error
+  # rest前不允许出现空格 --fix
+  rest-spread-spacing:
+    - error
+    - never
+  # import引入排序 --fix
+  sort-imports:
+    - off
+    - ignoreCase: true
+      ignoreMemberSort: false
+      # 排序方式
+      memberSyntaxSortOrder:
+        - none
+        - all
+        - multiple
+        - single
+  # 关闭symbal声明必须传入参数
+  symbol-description:
+    - off
+  # 模板字符串内必须空格
+  template-curly-spacing:
+    - error
+    - always
+  # generator函数*前后空格
+  yield-star-spacing:
+    - error
+    - before: true
+      after: false
+
+  ########################################################################
+  ###                           Stylistic Issues                       ###
+  ########################################################################
+
+  # 数组[]前后换行 --fix
+  array-bracket-newline:
+    - error
+    - never
+  # 数组首项尾项空格 --fix
+  array-bracket-spacing:
+    - error
+    - never
+  # 数组单行显示 --fix
+  array-element-newline:
+    - error
+    - multiline: true
+  # 代码块大括号前后空格 --fix
+  block-spacing:
+    - error
+    - always
+  # 代码块大括号后换行 --fix
+  brace-style:
+    - error
+    - 1tbs
+  # 变量名驼峰检查
+  camelcase:
+    - error
+    # 忽略解构、对象属性不检查
+    - ignoreDestructuring: true
+      properties: never
+  # 关闭注释检查
+  capitalized-comments:
+    - off
+  # 对象/函数末尾禁止逗号 --fix
+  comma-dangle:
+    - error
+    - never
+  # 逗号前后空格 --fix
+  comma-spacing:
+    - error
+    - before: false
+      after: true
+  # 逗号链接表达式时置于末尾 --fix
+  comma-style:
+    - error
+    - last
+  # 计算对象属性时无空格 --fix
+  computed-property-spacing:
+    - error
+    - never
+  # this暂存时，使用that代替
+  consistent-this:
+    - error
+    - that
+  # 文件结尾必须有换行符 --fix
+  eol-last:
+    - error
+    - always
+  # 函数体调用时，括号无空格 --fix
+  func-call-spacing:
+    - error
+    - never
+  # 关闭函数名与分配变量名检查
+  func-name-matching:
+    - off
+  # 匿名函数不需要分配变量名
+  func-names:
+    - error
+    - never
+    - generators: as-needed
+  # 函数表达式末尾有逗号
+  func-style:
+    - off
+    - allowArrowFunctions: true
+  # 多个函数参数单行显示 --fix
+  function-paren-newline:
+    - error
+    - never
+  # 额外关键字检查
+  id-blacklist:
+    - off
+  # 变量名长度限制
+  id-length:
+    - off
+  # 变量名声明规则
+  id-match:
+    - off
+  # 强制箭头函函数隐式返回 --fix
+  implicit-arrow-linebreak:
+    - error
+    - beside
+  # 两空格 --fix
+  indent:
+    - error
+    - 2
+    - VariableDeclarator: first
+  # jsx使用单引号 --fix
+  jsx-quotes:
+    - error
+    - prefer-single
+  # 对象属性冒号前后空格 --fix
+  key-spacing:
+    - error
+    - beforeColon: false
+      afterColon: true
+  #  关键字前后空格 --fix
+  keyword-spacing:
+    - error
+    - before: true
+      after: true
+  # 当行注释置于代码上
+  line-comment-position:
+    - error
+    - position: above
+  # 换行符\n
+  linebreak-style:
+    - error
+    - unix
+  # 注释换行--fix
+  lines-around-comment:
+    - error
+    - beforeBlockComment: true
+      afterBlockComment: false
+      beforeLineComment: true
+      afterLineComment: false
+  # 类属性之间换行 --fix
+  lines-between-class-members:
+    - error
+    - always
+  # 块级作用域最大深度4
+  max-depth:
+    - error
+    - max: 4
+  # 单行代码最长
+  max-len:
+    - off
+  # 文件行数
+  max-lines:
+    - off
+  # 函数体行数
+  max-lines-per-function:
+    - off
+  # 函数最大嵌套层数
+  max-nested-callbacks:
+    - error
+    - 10
+  # 参数最大数量
+  max-params:
+    - off
+  # 变量声明最大数量
+  max-statements:
+    - off
+  # 每行得最大语句数
+  max-statements-per-line:
+    - off
+  # 多行注释格式 --fix
+  multiline-comment-style:
+    - error
+    - starred-block
+  # 三元操作符多行显示
+  multiline-ternary:
+    - error
+    - always
+  # 构造器首字母大写
+  new-cap:
+    - error
+    - newIsCap: true
+  # new操作符时必须写括号 --fix
+  new-parens:
+    - error
+  # 函数链式调用换行处理
+  newline-per-chained-call:
+    - error
+    # 忽略长度
+    - ignoreChainWithDepth: 2
+  # 禁止new操作符调用Array
+  no-array-constructor:
+    - error
+  # 禁止位运算
+  no-bitwise:
+    - error
+  # 允许使用continue
+  no-continue:
+    - off
+  # 禁止行内注释
+  no-inline-comments:
+    - off
+  # 禁止if语句作为else的唯一语句 --fix
+  no-lonely-if:
+    - error
+  # 表达式禁止二元计算
+  no-mixed-operators:
+    - error
+  # 禁止使用tab/多个空格缩进 --fix
+  no-mixed-spaces-and-tabs:
+    - error
+  # 禁止链式赋值
+  no-multi-assign:
+    - off
+  # 禁止多个空行
+  no-multiple-empty-lines:
+    - error
+    - max: 2
+  # 禁止否定条件
+  no-negated-condition:
+    - off
+  # 禁止否定三元表达式
+  no-nested-ternary:
+    - off
+  # 禁止new操作符调用Object
+  no-new-object:
+    - error
+  # 禁止++/--
+  no-plusplus:
+    - off
+  # 禁止特定语法
+  no-restricted-syntax:
+    - off
+  # 禁止tab换行
+  no-tabs:
+    - error
+  # 禁止三段式
+  no-ternary:
+    - off
+  # 禁止尾随空格 --fix
+  no-trailing-spaces:
+    - error
+    - ignoreComments: true
+  # 禁止变量声明包含下划线
+  no-underscore-dangle:
+    - error
+  # 检验没必要的三段式
+  no-unneeded-ternary:
+    - error
+    - defaultAssignment: true
+  # 点连接符禁止空格
+  no-whitespace-before-property:
+    - error
+  # 单行语句同行显示
+  nonblock-statement-body-position:
+    - error
+    - beside
+  # 对象属性多余2个则换行 --fix
+  object-curly-newline:
+    - error
+    - multiline: true
+      minProperties: 2
+  # 对象大括号前后空格 --fix
+  object-curly-spacing:
+    - error
+    - always
+  # 对象单行单属性
+  object-property-newline:
+    - error
+  # 关闭只能声明一个var
+  one-var:
+    - off
+  # 关闭var多个变量的换行
+  one-var-declaration-per-line:
+    - off
+  # +=/-=等简写代码
+  operator-assignment:
+    - error
+  # 多元操作符换行时置于首位
+  operator-linebreak:
+    - error
+    - before
+  # 块级作用域前后禁止换行
+  padded-blocks:
+    - off
+  # 必要的空行
+  padding-line-between-statements:
+    - error
+    # 声明之后必须空行
+    - blankLine: always
+      prev: '*'
+      next: return
+    # return 之前必须空行
+    - blankLine: always
+      prev:
+        - const
+        - let
+        - var
+      next: '*'
+  # Object.assign时使用解构
+  prefer-object-spread:
+    - error
+  # 属性引号上下一致 --fix
+  quote-props:
+    - error
+    - consistent
+  # 仅允许单引号 --fix
+  quotes:
+    - error
+    - single
+  # 必要的分号 --fix
+  semi:
+    - error
+    - always
+  # 分号前后空格 --fix
+  semi-spacing:
+    - error
+    - before: false
+      after: true
+  # 分号位置
+  semi-style:
+    - error
+    - last
+  # 属性排序
+  sort-keys:
+    - off
+  # 声明排序
+  sort-vars:
+    - off
+  # 块级作用域前空格 --fix
+  space-before-blocks:
+    - error
+    - always
+  # 函数参数前括号不空格 --fix
+  space-before-function-paren:
+    - error
+    - never
+  # 括号内前后不空格 --fix
+  space-in-parens:
+    - error
+    - never
+  # 运算符前后空格
+  space-infix-ops:
+    - error
+    - int32Hint: false
+  # 一元运算符空格 --fix
+  space-unary-ops:
+    - error
+    - words: true
+      nonwords: false
+  # 注释之间换行 --fix
+  spaced-comment:
+    - error
+    - always
+  # case语句冒号前后空格 --fix
+  switch-colon-spacing:
+    - error
+    - after: true
+      before: false
+  # 关闭unicode检查
+  unicode-bom:
+    - off
+  # 关闭正则表达式必须括号
+  wrap-regex:
+    - off
+
+  ########################################################################
+  ###                        Node.js and CommonJS                      ###
+  ########################################################################
+
+  # 回调函数必须return
+  callback-return:
+    - error
+  # 关闭require必须置顶
+  global-require:
+    - off
+  # 携带err的回调函数必须执行
+  handle-callback-err:
+    - error
+  # 不允许buffer被new实例化
+  no-buffer-constructor:
+    - error
+  # 禁止变量声明和模块引入位于同一语句
+  no-mixed-requires:
+    - error
+  # 禁止new语句跟随require
+  no-new-require:
+    - error
+  # 禁止字符串拼接__dirname和filename
+  no-path-concat:
+    - error
+  # 关闭检查process.env
+  no-process-env:
+    - off
+  # 禁止使用process.exit()
+  no-process-exit:
+    - error
+  # 禁止引入的模块名
+  no-restricted-modules:
+    - off
+  # 关闭禁止使用sync同步函数
+  no-sync:
+    - off

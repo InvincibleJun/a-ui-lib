@@ -1,21 +1,26 @@
 <template>
-  <transition name="modal-fade">
-    <div class="c-modal-wrapper" v-if="visible" @click.self="close" :style="style">
+  <Transition name="modal-fade">
+    <div
+      class="c-modal-wrapper"
+      v-if="visible"
+      @click.self="close"
+      :style="style"
+    >
       <div class="c-modal">
         <slot name="head">
           <span>12312</span>
         </slot>
-        <slot name="body"></slot>
+        <slot name="body" />
         <div v-if="$slots.footer">
-          <slot name="footer"></slot>
+          <slot name="footer" />
         </div>
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>
-import msk from '../../mixins/msk'
+import msk from '../../mixins/msk';
 
 export default {
   mixins: [msk],
@@ -24,25 +29,25 @@ export default {
       type: Boolean,
       default: false
     },
-   bodyNoScroll: {
+    bodyNoScroll: {
       type: Boolean,
       default: true
     }
   },
   computed: {
     style() {
-      return {}
+      return {};
     }
+  },
+  mounted() {
+    document.body.appendChild(this.$el);
   },
   methods: {
     close() {
-      this.$emit('update:visible', false)
+      this.$emit('update:visible', false);
     }
-  },
-  mounted () {
-    document.body.appendChild(this.$el)
   }
-}
+};
 
 </script>
 
