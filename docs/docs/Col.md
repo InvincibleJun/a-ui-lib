@@ -1,6 +1,206 @@
 # 布局
 
-<layout />
+## 示例
+
+### 常规栅格布局
+
+<layout-grid />
+
+> code
+
+```
+<template>
+  <div>
+   <Row class-name="line">
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+      <Col :spans="2">
+        <div class="col">col-2</div>
+      </Col>
+    </Row>
+
+    <Row :gutter="16" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :offset="4" :spans="4">
+        <div class="col">col-8</div>
+      </Col>
+      <Col :offset="10" :spans="2">
+        <div class="col">col-6</div>
+      </Col>
+    </Row>
+
+    <Row :gutter="16" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="8">
+        <div class="col">col-8</div>
+      </Col>
+      <Col :spans="12">
+        <div class="col">col-6</div>
+      </Col>
+    </Row>
+  </div>
+</template>
+
+<style>
+.col {
+  background-color: rgba(0, 153, 229, 0.9);
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+}
+
+.line {
+  margin: 10px;
+}
+</style>
+
+```
+
+### flex 布局
+
+<layout-flex />
+
+> code
+
+```
+<template>
+  <div>
+    <Row :gutter="16" type="flex" justify="center" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+    </Row>
+    <Row :gutter="16" type="flex" justify="flex-start" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+    </Row>
+    <Row :gutter="16" type="flex" justify="space-around" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+    </Row>
+    <Row :gutter="16" type="flex" justify="space-between" class="line">
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :spans="4">
+        <div class="col">col-4</div>
+      </Col>
+    </Row>
+  </div>
+</template>
+
+<style>
+.col {
+  background-color: #3eaf7c;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+}
+
+.line {
+  margin: 10px;
+}
+</style>
+```
+
+### 响应式布局
+
+<layout-responsive />
+
+> code
+
+```
+<template>
+  <div>
+    <Row :gutter="16" class="line">
+      <Col :xs="2" :sm="4" :md="6" :lg="8" :xl="4">
+        <div class="col">col-4</div>
+      </Col>
+      <Col :xs="20" :sm="16" :md="12" :lg="8" :xl="16">
+        <div class="col">col-16</div>
+      </Col>
+      <Col :xs="2" :sm="4" :md="6" :lg="8" :xl="4">
+        <div class="col">col-4</div>
+      </Col>
+    </Row>
+  </div>
+</template>
+
+<style>
+.col {
+  background-color: #3eaf7c;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+}
+
+.line {
+  margin: 10px;
+}
+</style>
+
+```
 
 ## Col
 
