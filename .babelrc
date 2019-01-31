@@ -1,18 +1,31 @@
 {
   "presets": [
-    ["env", {
-      "modules": false,
-      "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+    [
+      "@babel/preset-env",
+      {
+        // 由于webpack4统一处理模块，babel不在处理模块，保持原始模块规范
+        "modules": false,
+        // 关闭debug模式
+        "debug": false,
+        // 松散模式，松散模式将生产可读性高、体积更小的文件
+        "loose": true,
+        // 无需引入babel-polyfill，自动检索所需配置文件
+        "useBuiltIns": "usage"
       }
-    }],
-    "stage-2"
+    ]
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime", "jsx-v-model"],
-  "env": {
-    "test": {
-      "presets": ["env", "stage-2"],
-      "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node"]
-    }
-  }
+  "plugins": [
+    // async-generator-functions
+    // "@babel/plugin-proposal-async-generator-functions",
+    // decorators语法支持
+    // ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    // 支持??操作符
+    // "@babel/plugin-proposal-nullish-coalescing-operator",
+    // 支持模块懒加载
+    // "@babel/plugin-syntax-dynamic-import",
+    // jsx支持
+    // "@babel/plugin-syntax-jsx",
+    // vue-jsx编译
+    "@vue/babel-plugin-transform-vue-jsx"
+  ]
 }

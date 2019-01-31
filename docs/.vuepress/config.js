@@ -1,6 +1,7 @@
 const path = require('path');
 // console.log(sidebar)
 module.exports = {
+  host: 'localhost',
   title: 'DOCS',
   home: false,
   description: '一套文档系统',

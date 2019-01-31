@@ -1,11 +1,16 @@
 import Upload from './upload.vue';
+import Button from '../button';
+import FileList from './file-list.vue';
 
 export default {
   name: 'CUpload',
 
-  components: { Upload },
+  components: { Upload, Button, FileList },
 
   props: {
+    customResponse: {
+      type: Function
+    },
 
     // 上传路径
     action: {
@@ -77,7 +82,8 @@ export default {
   data() {
     return {
       speed: 0,
-      percent: 0
+      percent: 0,
+      list: []
     };
   },
 
@@ -86,30 +92,48 @@ export default {
       this.$refs.upload.open();
     },
 
-    progress({
-      speed, percent
-    }) {
+    progress({ speed, percent }) {
       this.speed = speed;
       this.percent = percent * 100;
+    },
+
+    /**
+     *
+     * @param {object} params
+     * @param {string} params.url 上传成功url
+     * @param {string} params.response 上传成功response
+     * @param {string} params.fileName 原始文件名
+     * @param {string} params.status 状态 [done, uploading, error, willDone]
+     */
+    fileChange({ key, fileName, url, response, status }) {
+      const option = arguments[0];
+      let target = this.list.find(val => val.key === key);
+      if (target) {
+        target = option;
+      } else {
+        this.list.push(option);
+      }
     }
   },
 
-  render() {
+  render(h) {
     return (
       <div>
-        {this.$slots.trigger
-          ? <div onClick={
-            () => this.openUploadView()}>{this.$slots.trigger
-            }</div>
-          : <button onClick={() => this.openUploadView()}> 点击上传 </button>
-        }
+        {this.$slots.trigger ? (
+          <div onClick={() => this.openUploadView()}>{this.$slots.trigger}</div>
+        ) : (
+          <Button onClick={() => this.openUploadView()}> 点击上传 </Button>
+        )}
         <div> {this.speed}k / s </div> <div> {this.percent} % </div>
         <Upload
+          // customResponse={this.customResponse}
           onProgress={this.progress}
           expect={this.expect}
+          fileChange={this.fileChange}
           auto-upload={this.autoUpload}
-          ref='upload'
+          ref="upload"
         />
+        <FileList />
       </div>
     );
   }

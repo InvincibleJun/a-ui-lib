@@ -1,9 +1,7 @@
-// 
+//
 const noop = () => {
-
   /** */
 };
-
 
 /**
  * 文件分片
@@ -36,9 +34,7 @@ function chipFile(file, size) {
  * @param {object} handler hook函数
  */
 function send(data, action, headers, handler) {
-  const {
-    onError, onSuccess, onProgress
-  } = handler;
+  const { onError, onSuccess, onProgress } = handler;
 
   const xhr = new XMLHttpRequest();
 
@@ -52,18 +48,16 @@ function send(data, action, headers, handler) {
   }
 
   let lastTime = new Date(),
-      lastLoaded = 0;
+    lastLoaded = 0;
 
   xhr.upload.onprogress = function(e) {
-    const {
-      loaded, total
-    } = e;
+    const { loaded, total } = e;
 
     const nowTime = new Date();
 
-    const t = nowTime - lastTime;
+    const t = (nowTime - lastTime) / 1000;
 
-    const l = loaded - lastLoaded;
+    const l = (loaded - lastLoaded) / 1024;
 
     lastTime = nowTime;
     lastLoaded = loaded;

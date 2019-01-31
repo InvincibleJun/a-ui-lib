@@ -1,35 +1,48 @@
 # Progress 进度条
 
+### 示例
 
-### example
+#### 线性
+<progress-line />
 ```
 <template>
-  <div  style="width:300px">
+  <div>
+    <div style="width:300px">
       <c-progress :value="value1" :textInside="false" :height="20" type="line"></c-progress>
-  </div>
-
-  <div  style="width:100px">
-      <c-progress :value="value1" :textInside="true" type="circle"></c-progress>
+    </div>
+    <br>
+    <div style="width:300px">
+      <c-progress :value="value1" :textInside="true" type="line"></c-progress>
+    </div>
   </div>
 </template>
 
 <script>
+
 export default {
+  components: {
+    CProgress
+  },
   data() {
     return {
-      value1: 0
+      value1: 0,
       value2: 0
-    }
+    };
   },
   created() {
     setInterval(() => {
-      this.v1 = 100 * Math.random()
-      this.v2 = 100 * Math.random()
-    }, 2000)
+      this.value1 = 100 * Math.random();
+      this.value1 = 100 * Math.random();
+    }, 2000);
   }
 };
 </script>
 ```
+
+#### 环形
+<progress-circle />
+
+
 
 ### props
 

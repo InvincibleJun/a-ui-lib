@@ -2,6 +2,8 @@
 
 ### example
 
+<loading-bar />
+
 组件内调用
 
 ```

@@ -21,15 +21,17 @@ function createInstance() {
   const component = Instance.$mount();
 
   document.body.appendChild(component.$el);
-  const loading_bar = Instance.$children[0];
+  const loadingBar = Instance.$children[0];
 
   return {
     update(option) {
       for (const i in option) {
-        loading_bar[i] = option[i];
+        loadingBar[i] = option[i];
       }
     },
-    destory() {}
+    destory() {
+      document.body.removeChild(document.querySelector(component.$el));
+    }
   };
 }
 
@@ -42,18 +44,20 @@ function update(option) {
 }
 
 function hide() {
-  setTimeout(() => {
+  hide.t1 = setTimeout(() => {
     i.update({
-      show: false,
+      show: false
+    });
+  }, 100);
+  hide.t2 = setTimeout(() => {
+    i.update({
       percent: 0
     });
   }, 800);
 }
 
 function config(option) {
-  const {
-    color = '#2d8cf0', height = 2, timeout = 2000
-  } = option;
+  const { color = '#2d8cf0', height = 2, timeout = 5000 } = option;
 
   props = {
     color,
@@ -73,9 +77,9 @@ export default {
 
     let w = 0;
 
-    s = Number(new Date());
+    s = +new Date();
     timer = setInterval(() => {
-      if (Number(new Date()) - s > props.timeout) {
+      if (+new Date() - s > props.timeout) {
         const { onError = () => {} } = option;
 
         return this.error(onError);
@@ -87,7 +91,7 @@ export default {
       update({
         show: true,
         status: 'loading',
-        percent: w += Math.floor(Math.random() * 3 + 1)
+        percent: (w += Math.floor(Math.random() * 3 + 1))
       });
     }, 200);
   },
@@ -104,7 +108,7 @@ export default {
   },
 
   destroy() {
-    document.body.removeChild(document.querySelector('.c-loading-bar-container'));
+    i.destory();
   },
 
   finish() {

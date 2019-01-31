@@ -1,22 +1,19 @@
 <template>
   <div>
-    <input
-      ref="input"
-      type="file"
-      @change="changHandler"
-      class="c-upload-input"
-    >
+    <input ref="input" type="file" @change="changHandler" class="c-upload-input">
   </div>
 </template>
 
 <script>
-import alert from '../alert';
-import http from './upload-ajax';
+import alert from "../alert";
+import http from "./upload-ajax";
 
+let uuid = 0;
 export default {
   props: {
     expect: String,
-    autoUpload: Boolean
+    autoUpload: Boolean,
+    fileChange: Function
   },
   data() {
     return { file: null };
@@ -30,35 +27,55 @@ export default {
     changHandler(e) {
       this.path = e.target.value;
       const [file] = e.target.files;
+      const { type, name } = file;
+      const params = {
+        type,
+        name,
+        url: "",
+        response: null,
+        status: "willDone"
+      };
 
-      const { type } = file;
+      this.fileChange(params);
 
       if (!this.checkExpect(type)) {
-        alert(`${ this.expect }mime类型错误`);
+        alert(`${this.expect}mime类型错误`);
 
         return;
       }
       if (this.autoUpload) {
-        this.upload(file);
+        this.upload(file, params);
       }
     },
 
     // eslint-disable-next-line no-unused-vars
-    onSucess(res) {
+    onSucess(response, params) {
+      const { customResponse, fileChange } = this.$parent;
+      let url;
 
-      //
+      if (customResponse && typeof customResponse === "function") {
+        url = customResponse(response);
+      } else {
+        url = response.url;
+      }
+
+      fileChange({ ...params, url, response, status: "done" });
     },
 
-    onSizeError() {
-
-      //
+    onSizeError(params) {
+      this.$parent.fileChange({ ...params, status: "error", msg: "文件过大" });
     },
 
     onError(err) {
-      console.log(err);
+      fileChange({
+        ...params,
+        response: err,
+        status: "error",
+        msg: "上传失败"
+      });
     },
 
-    upload(file) {
+    upload(file, params) {
       const {
         chip,
         chipSize,
@@ -78,17 +95,17 @@ export default {
         chip,
         maxSize,
         chipSize,
-        onSucess: () => {
-          this.onSucess();
+        onSucess: response => {
+          this.onSucess(response, params);
         },
-        onError: () => {
-          this.onError();
+        onError: error => {
+          this.onError(error, params);
         },
         onSizeError: () => {
           this.onSizeError();
         },
         onProgress: (speed, percent) => {
-          this.$emit('progress', {
+          this.$emit("progress", {
             speed,
             percent
           });
@@ -100,8 +117,7 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     checkExpect(type) {
-
-      if ('' === this.expect) {
+      if ("" === this.expect) {
         return true;
       }
 
@@ -115,11 +131,10 @@ export default {
         }
 
         return (
-          matchType[1] === match[1]
-          && ('*' === match[2] || match[2] === matchType[2])
+          matchType[1] === match[1] &&
+          ("*" === match[2] || match[2] === matchType[2])
         );
       } else {
-
         // expect 非法 或者置空时,不坚持文件类型
         return false;
       }

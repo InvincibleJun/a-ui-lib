@@ -19,7 +19,7 @@ export default {
     }
   },
 
-  render() {
+  render(h) {
     const { show, height, color } = this;
     return (
       <transition name="c-fade">

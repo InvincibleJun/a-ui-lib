@@ -5,15 +5,36 @@
   "main": "index.js",
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@vue/babel-plugin-transform-vue-jsx": "^1.0.0-beta.2",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "iview": "^3.2.2",
     "node-sass": "^4.11.0",
+    "popper.js": "^1.14.6",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
-    "vue-loader": "^15.4.2",
-    "vuepress": "^0.14.8",
-    "webpack": "^4.28.2"
+    "tween.js": "^16.6.0",
+    "url-loader": "^1.1.2",
+    "vue": "^2.5.22",
+    "vue-loader": "^15.6.2",
+    "vue-style-loader": "^4.1.2",
+    "vuepress": "^0.14.8"
+  },
+  "devDependencies": {
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-cssnext": "^3.1.0",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   }
 }

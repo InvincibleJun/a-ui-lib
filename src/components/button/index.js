@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  render() {
+  render(h) {
     return (
       <button
         onClick={this.handlerClick}

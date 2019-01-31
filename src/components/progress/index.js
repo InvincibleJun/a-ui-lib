@@ -19,37 +19,44 @@ export default {
       default: 'line'
     },
 
+    // circle有效
     width: {
       type: Number,
       default: 120
     },
 
+    // line有效
     height: {
       type: Number,
       default: 18
     },
 
+    // line的百分比位置
     textInside: {
       type: Boolean,
       default: false
     },
 
+    // 圆环宽度
     strokeWidth: {
       type: Number,
       default: 6
     },
 
+    // 保留小数位
     fixed: {
       type: Number,
       default: 1
     },
 
+    //  color
     color: {
       type: String,
       default: '#67c23a',
       validator: isColor
     },
 
+    // 阴影颜色
     bgColor: {
       type: String,
       default: '#ebeef5',
@@ -72,26 +79,26 @@ export default {
 
     lineStyle() {
       return {
-        width: `${ this.percentage }%`,
-        borderRadius: `${ this.height / 2 }px`,
+        width: `${this.percentage}%`,
+        borderRadius: `${this.height / 2}px`,
         backgroundColor: this.color
       };
     },
 
     strokeDash() {
-      return `${ this.length } ${ this.length }`;
+      return `${this.length} ${this.length}`;
     },
 
     svgCircleD() {
-      return `M 50 50 m 0 -${ this.svgRadius } a ${ this.svgRadius } ${
+      return `M 50 50 m 0 -${this.svgRadius} a ${this.svgRadius} ${
         this.svgRadius
-      } 0 0 0 0 ${ this.svgRadius * 2 } a ${ this.svgRadius } ${
+      } 0 0 0 0 ${this.svgRadius * 2} a ${this.svgRadius} ${
         this.svgRadius
-      } 0 1 0 0 -${ this.svgRadius * 2 }`;
+      } 0 1 0 0 -${this.svgRadius * 2}`;
     },
 
     svgStrokeWidth() {
-      return this.strokeWidth / this.width * 100;
+      return (this.strokeWidth / this.width) * 100;
     },
 
     svgRadius() {
@@ -104,8 +111,8 @@ export default {
 
     dashoffset() {
       return this.circle
-        // eslint-disable-next-line no-mixed-operators
-        ? this.length - this.percentage / 100 * this.length
+        ? // eslint-disable-next-line no-mixed-operators
+          this.length - (this.percentage / 100) * this.length
         : this.length;
     },
 
@@ -143,35 +150,32 @@ export default {
     }
   },
 
-  render() {
-    const {
-      type, textInside, percentage
-    } = this;
+  render(h) {
+    const { type, textInside, percentage } = this;
 
-    const text
-      = <div class={this.getTextClass} style={{ lineHeight: `${ this.height }px` }}>
+    const text = (
+      <div class={this.getTextClass} style={{ lineHeight: `${this.height}px` }}>
         {percentage}%
-      </div>;
+      </div>
+    );
 
     if (type === 'line') {
       return (
         <div
-          class='c-progress-line-wrapper'
+          class="c-progress-line-wrapper"
           style={{
-            paddingRight: !textInside
-              ? `${ 50 }px`
-              : 0
+            paddingRight: !textInside ? `${50}px` : 0
           }}
         >
           <div
-            class='c-progress-line-bar'
+            class="c-progress-line-bar"
             style={{
               backgroundColor: this.bgColor,
-              borderRadius: `${ this.height / 2 }px`,
-              height: `${ this.height }px`
+              borderRadius: `${this.height / 2}px`,
+              height: `${this.height}px`
             }}
           >
-            <div class='c-progress-line-percentage' style={this.lineStyle}>
+            <div class="c-progress-line-percentage" style={this.lineStyle}>
               {textInside && text}
             </div>
           </div>
@@ -181,28 +185,28 @@ export default {
     } else if (type === 'circle') {
       return (
         <div
-          class='c-progress-circle'
+          class="c-progress-circle"
           style={{
-            width: `${ this.width }px`,
-            height: `${ this.width }px`
+            width: `${this.width}px`,
+            height: `${this.width}px`
           }}
         >
-          <svg version='1.1' viewBox='0 0 100 100'>
+          <svg version="1.1" viewBox="0 0 100 100">
             <path
               d={this.svgCircleD}
               stroke={this.bgColor}
-              fill='none'
+              fill="none"
               stroke-width={this.svgStrokeWidth}
             />
             <path
-              stroke-linecap='round'
-              class='c-progress-circle-percentage'
+              stroke-linecap="round"
+              class="c-progress-circle-percentage"
               stroke-dasharray={this.strokeDash}
               stroke-dashoffset={this.dashoffset}
-              ref='circle'
+              ref="circle"
               d={this.svgCircleD}
               stroke={this.color}
-              fill='none'
+              fill="none"
               stroke-width={this.svgStrokeWidth}
             />
           </svg>
