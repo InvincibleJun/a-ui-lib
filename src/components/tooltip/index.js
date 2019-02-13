@@ -20,18 +20,23 @@ export default {
 
     backgroundColor: {
       type: String,
-      default: 'rgb(70,76,91)',
+      default: 'rgb(0,0,0)',
       validator: isColor
     },
 
     timeout: {
       type: Number,
-      default: 0
+      default: 500
     },
 
     delay: {
       type: Number,
       default: 200
+    },
+
+    manual: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -64,11 +69,15 @@ export default {
 
   methods: {
     openTooltip() {
+      if (this.manual) return;
       clearTimeout(this.timer);
-      this.debounce();
+      this.debounce(() => {
+        // console.log('debouce');
+      });
     },
 
     closeTooltip() {
+      if (this.show === false || this.manual) return;
       if (this.timeout > 0) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
@@ -81,6 +90,7 @@ export default {
   },
 
   mounted() {
+    document.body.appendChild(this.$refs['popper']);
     this.init();
     this.debounce = debounce(() => {
       this.show = true;
@@ -93,33 +103,34 @@ export default {
 
     return (
       <div
-        ref='container'
-        class='c-tooltip-container'
+        ref="container"
+        class="c-tooltip-container"
         onMouseenter={this.openTooltip}
         onMouseleave={this.closeTooltip}
       >
         {this.$slots.default}
-        <transition name='c-fade'>
+        <transition name="c-fade">
           <div
             onMouseenter={this.openTooltip}
             onMouseleave={this.closeTooltip}
-            class='c-tooltip-popper-container'
-            ref='popper'
+            class="c-tooltip-popper-container"
+            ref="popper"
             v-show={this.show}
           >
             <div
-              class='c-tooltip-popper'
+              class="c-tooltip-popper"
               style={{
                 background: this.backgroundColor,
                 borderColor: this.backgroundColor
               }}
             >
-              <div class='c-tooltip-arrow' />
-              <div class='c-tooltip-content'>
-                {this.$slots.content
-                  ? this.$slots.content
-                  : <p>{this.content}</p>
-                }
+              <div class="c-tooltip-arrow" />
+              <div class="c-tooltip-content">
+                {this.$slots.content ? (
+                  this.$slots.content
+                ) : (
+                  <p>{this.content}</p>
+                )}
               </div>
             </div>
           </div>

@@ -4,13 +4,12 @@ const oP = Object.prototype;
  *
  * @param fn {Function}   实际要执行的函数
  * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
- *
  * @return {Function}
  */
 export const debounce = function(fn, delay) {
   let timer;
 
-  return function() {
+  return function(callback) {
     // eslint-disable-next-line
     const context = this;
 
@@ -20,7 +19,9 @@ export const debounce = function(fn, delay) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fn.apply(context, [timer, ...args]);
+      callback()
     }, delay);
+
   };
 };
 
@@ -51,11 +52,10 @@ export const isArray = function(o) {
   return oP.toString.call(o) === '[object Array]';
 };
 
-
 /**
  * 判断数组是否包含目标
- * @param {array} o  
- * @param {any} target 
+ * @param {array} o
+ * @param {any} target
  * @return {boolean}
  */
 export const oneOf = function(o, target) {
@@ -71,4 +71,3 @@ export const oneOf = function(o, target) {
 
   return false;
 };
-

@@ -26,7 +26,8 @@ module.exports = {
         'Collapse',
         'Colorpicker',
         'Dropdown',
-        'Tabs'
+        'Tabs',
+        'Message'
       ],
     }
     // sidebar

@@ -2,6 +2,8 @@
 
 ### example
 
+<dropdown-index />
+
 ```
    <c-dropdown @select="select">选择
       <template slot="menu" >

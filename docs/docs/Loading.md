@@ -2,6 +2,8 @@
 
 ### example
 
+<loading-index />
+
 ```
     <c-loading :show="true" ></c-loading>
 ```

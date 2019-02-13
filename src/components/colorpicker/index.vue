@@ -1,35 +1,18 @@
 <template>
-  <div style="width: 340px; height: 180px;">
-    <div
-      :style="style"
-      :class="blockClass"
-      @click="toggle"
-    />
+  <div>
+    <div :style="style" :class="blockClass" @click="toggle"/>
 
-    <transition
-      name="c-zoom-in-top"
-      @enter="enter"
-    >
-      <div v-show="show">
+    <transition name="c-zoom-in-top" @enter="enter">
+      <div v-show="show" style="width: 340px; height: 180px; position:absolute">
         <!-- hue色彩选择 -->
-        <hue-picker
-          :color="color"
-          ref="color"
-        />
+        <hue-picker :color="color" ref="color"/>
 
         <!-- 颜色选择 -->
-        <color-picker :color="color" />
+        <color-picker :color="color"/>
 
         <!-- 透明 -->
-        <alpha-picker
-          v-if="alpha"
-          :color="color"
-        />
-        <input
-          v-model="inputValue"
-          @blur="inputHanlderBlur"
-          v-if="editable"
-        >
+        <alpha-picker v-if="alpha" :color="color"/>
+        <input v-model="inputValue" @blur="inputHanlderBlur" v-if="editable">
         <div v-else>{{ inputValue }}</div>
         <button @click="ok">确定</button>
         <button @click="quit">取消</button>
@@ -39,14 +22,14 @@
 </template>
 
 <script>
-import Color from './color';
-import AlphaPicker from './alpha-picker';
-import HuePicker from './hue-picker';
-import ColorPicker from './color-picker';
-import { isColor } from '../../utils/valid-prop';
+import Color from "./color";
+import AlphaPicker from "./alpha-picker";
+import HuePicker from "./hue-picker";
+import ColorPicker from "./color-picker";
+import { isColor } from "../../utils/valid-prop";
 
 export default {
-  name: 'CColorpicker',
+  name: "CColorpicker",
 
   components: {
     AlphaPicker,
@@ -69,21 +52,21 @@ export default {
     },
     format: {
       type: String,
-      default: 'hex'
+      default: "hex"
     }
   },
   data() {
     return {
       show: false,
       color: null,
-      inputValue: ''
+      inputValue: ""
     };
   },
 
   computed: {
     blockClass() {
       return `c-colorpicker-toggle${
-        this.value || this.show ? '' : ' c-colorpicker-none'
+        this.value || this.show ? "" : " c-colorpicker-none"
       }`;
     },
     style() {
@@ -96,7 +79,7 @@ export default {
 
   watch: {
     show(nv) {
-      this.$emit(nv ? 'on-open' : 'on-close');
+      this.$emit(nv ? "on-open" : "on-close");
     },
     value: {
       handler(nv) {
@@ -128,8 +111,8 @@ export default {
     },
 
     ok() {
-      this.$emit('input', this.colorValue);
-      this.$emit('on-change', this.colorValue);
+      this.$emit("input", this.colorValue);
+      this.$emit("on-change", this.colorValue);
       this.show = false;
     },
 

@@ -23,17 +23,21 @@
   margin: 0;
   font-size: 14px;
   color: #606266;
-  cursor: pointer;
   outline: none;
-  transition: background-color .3s ease-in-out;
-  &:hover {
-    background-color: #EEEEEE;
+  transition: background-color 0.3s ease-in-out;
+  &:not(.c-dropdown-item-disabled) {
+    &:hover {
+      background-color: #eeeeee;
+    }
   }
-  &.c-dropdown-item-active{
-    background-color: #EEEEEE;
+
+  &.c-dropdown-item-active {
+    cursor: pointer;
+    background-color: #eeeeee;
   }
-  .c-dropdown-item-disabled{
-    background-color: #BBBBBB;
+  &.c-dropdown-item-disabled {
+    cursor: not-allowed;
+    color: #bbbbbb;
   }
 }
 

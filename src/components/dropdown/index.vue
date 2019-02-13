@@ -1,35 +1,30 @@
 <template>
   <div
-    @click=" en"
+    @click="open"
     @mouseleave="hide"
     @mouseenter="clearTimer"
-    @keyup="keyup"
+    @keydown="keydown"
     class="c-dropdown"
     tabindex="0"
   >
-    <slot />
+    <slot/>
 
     <Transition name="modal-fade">
-      <ul
-        class="c-dropdown-menu"
-        :style="style"
-        v-if="show"
-      >
-        <slot name="menu" />
+      <ul class="c-dropdown-menu" :style="style" v-if="show">
+        <slot name="menu"/>
+        <!-- <div class=""></div> -->
       </ul>
     </Transition>
   </div>
 </template>
 
 <script>
-import {
-  addEvent, checkInComponent
-} from '../../utils/dom';
+import { addEvent, checkInComponent } from "../../utils/dom";
 
 let timer;
 
 export default {
-  name: 'CDropdown',
+  name: "CDropdown",
 
   props: {
     autoHide: {
@@ -59,23 +54,26 @@ export default {
   computed: {
     style() {
       return {
-        left: `${ this.left }px`,
-        top: `${ this.top + this.height }px`
+        left: `${this.left}px`,
+        top: `${this.top + this.height}px`
       };
+    },
+    children() {
+      return this.$children.filter(v => v.disabled === false);
+    },
+    count() {
+      return this.children.length;
     }
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
     show(nv, ov) {
-
       // console.log(nv);
     }
   },
 
   mounted() {
-    const {
-      left, top, height
-    } = this.$el.getBoundingClientRect();
+    const { left, top, height } = this.$el.getBoundingClientRect();
 
     this.left = left;
     this.top = top;
@@ -89,8 +87,8 @@ export default {
     setActive(index) {
       this.active = index;
     },
-    select(index) {
-      this.$emit('select', index);
+    select(value) {
+      this.$emit("select", value);
     },
     hide() {
       if (this.autoHide) {
@@ -103,30 +101,28 @@ export default {
     clearTimer() {
       clearTimeout(timer);
     },
-    keyup(e) {
+    keydown(e) {
       if (this.active === -1) {
-
         //
       }
+
       if (e.keyCode === 38) {
-        this.active
-          = this.active <= 0
-            ? this.$children.length - 1
-            : this.active - 1;
+        e.preventDefault();
+        this.active = this.active <= 0 ? this.count - 1 : this.active - 1;
       } else if (e.keyCode === 40) {
-        this.active
-          = this.active === this.$children.length - 1
-            ? 0
-            : this.active + 1;
+        e.preventDefault();
+        this.active = this.active === this.count - 1 ? 0 : this.active + 1;
+      } else if (e.keyCode === 13) {
+        this.children[this.active].handlerClick();
+        this.reset();
       }
     },
     open() {
       if (this.show) {
-        this.show = false;
-        this.unbind();
+        this.reset();
       } else {
         this.$nextTick(() => {
-          this.unbind = addEvent(document.body, 'click', e => {
+          this.unbind = addEvent(document.body, "click", e => {
             e.preventDefault();
 
             // 检测点击范围
@@ -141,7 +137,7 @@ export default {
 
     reset() {
       this.show = false;
-      this.unbind();
+      this.unbind && this.unbind();
     }
   }
 };

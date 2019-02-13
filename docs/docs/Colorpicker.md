@@ -1,5 +1,8 @@
 # colorpicker 颜色选择器
 
+## 示例
+<colorpicker-index />
+
 ### props
 
 | key      | type    | enum                 | requried | default  | desc                                |

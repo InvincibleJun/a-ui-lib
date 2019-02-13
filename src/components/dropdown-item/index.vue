@@ -1,18 +1,14 @@
 <template>
-  <li
-    :class="classNames"
-    @mouseenter="handlerEnter"
-    @click="handlerClick"
-  >
-    <slot />
+  <li :class="classNames" @mouseenter="handlerEnter" @click="handlerClick">
+    <slot/>
   </li>
 </template>
 
 <script>
-import { isUndefined } from '../../utils/func';
+import { isUndefined } from "../../utils/func";
 
 export default {
-  name: 'CDropdownItem',
+  name: "CDropdownItem",
   props: {
     disabled: {
       type: Boolean,
@@ -22,35 +18,40 @@ export default {
   },
   computed: {
     index() {
-      for (let i = 0, l = this.$parent.$children.length; i < l; i++) {
-        if (this.$parent.$children[i] === this) {
+      if (this.disabled) {
+        return -2;
+      }
+      let childrens = this.$parent.$children.filter(v => v.disabled === false);
+      for (let i = 0, l = childrens.length; i < l; i++) {
+        if (childrens[i] === this) {
+          // console.log(this.$parent.$children[i].disabled)
           return i;
         }
       }
 
-      return '';
+      return "";
     },
     isActive() {
       return this.$parent.active === this.index;
     },
     classNames() {
-      return ['c-dropdown-item',
-        this.disabled
-          ? 'c-dropdown-item-disabled'
-          : '',
-        this.isActive
-          ? 'c-dropdown-item-active'
-          : ''];
+      return [
+        "c-dropdown-item",
+        this.disabled ? "c-dropdown-item-disabled" : "",
+        this.isActive ? "c-dropdown-item-active" : ""
+      ];
     }
   },
   methods: {
     handlerEnter() {
-      this.$parent.setActive(this.index);
+      if (!this.disabled) {
+        this.$parent.setActive(this.index);
+      }
     },
     handlerClick() {
-      this.$parent.select(isUndefined(this.value)
-        ? this.index
-        : this.value);
+      if (!this.disabled) {
+        this.$parent.select(isUndefined(this.value) ? this.index : this.value);
+      }
     }
   }
 };

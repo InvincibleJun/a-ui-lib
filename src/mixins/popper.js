@@ -1,7 +1,8 @@
 /*
- * https://github.com/FezVrasta/popper.js/blob/master/docs/_includes/popper-documentation.md
  * thanks
+ * https://github.com/FezVrasta/popper.js/blob/master/docs/_includes/popper-documentation.md
  */
+
 import Popper from 'popper.js';
 import { isPlacement } from '../utils/valid-prop';
 

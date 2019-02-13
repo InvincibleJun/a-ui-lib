@@ -1,4 +1,6 @@
 // $bg: rgba(70, 76, 91, 0.9);
+@import '../mixins/fade.scss';
+
 $offset: 8px;
 $direction-map: (
   top: bottom,
@@ -14,7 +16,7 @@ $direction-map: (
 }
 
 @mixin arrow($direction, $d1, $d2, $d3) {
-  &[x-placement^="$direction"] {
+  &[x-placement^='$direction'] {
     padding-top: $offset;
     .c-tooltip-arrow {
       margin-#{d1}: -5px;
@@ -23,10 +25,10 @@ $direction-map: (
       // @include paintArrow($direction, 5px, $bg, $d3);
     }
   }
-  &[x-placement="$direction-start"] .c-tooltip-arrow {
+  &[x-placement='$direction-start'] .c-tooltip-arrow {
     $d1: 12px;
   }
-  &[x-placement="$direction-end"] .c-tooltip-arrow {
+  &[x-placement='$direction-end'] .c-tooltip-arrow {
     $d2: 12px;
   }
 }
@@ -34,83 +36,93 @@ $direction-map: (
 .c-tooltip-container {
   display: inline-block;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .c-tooltip-popper-container {
   .c-tooltip-popper {
     position: relative;
+    font-size: 14px;
     // background: $bg;
     color: #fff;
     border-radius: 4px;
     border-width: 0px;
-    box-shadow: 0 0 2px 1px #ccc;
+    // box-shadow: 0 0 2px 1px #ccc;
   }
 
   // bottom
-  &[x-placement^="bottom"] {
+  &[x-placement^='bottom'] {
     padding-top: $offset;
     .c-tooltip-arrow {
       margin-left: -5px;
       left: 50%;
       top: -5px;
-      @include paintArrow("bottom", 5px);
+      @include paintArrow('bottom', 5px);
     }
   }
-  &[x-placement="bottom-start"] .c-tooltip-arrow {
+  &[x-placement='bottom-start'] .c-tooltip-arrow {
     left: 12px;
   }
-  &[x-placement="bottom-end"] .c-tooltip-arrow {
+  &[x-placement='bottom-end'] .c-tooltip-arrow {
+    left: auto;
     right: 12px;
   }
 
   // top
-  &[x-placement^="top"] {
+  &[x-placement^='top'] {
     padding-bottom: $offset;
     .c-tooltip-arrow {
       margin-left: -5px;
       left: 50%;
       bottom: -5px;
-      @include paintArrow("top", 5px);
+      @include paintArrow('top', 5px);
     }
   }
-  &[x-placement="top-start"] .c-tooltip-arrow {
+  &[x-placement='top-start'] .c-tooltip-arrow {
     left: 12px;
   }
-  &[x-placement="top-end"] .c-tooltip-arrow {
+  &[x-placement='top-end'] .c-tooltip-arrow {
+    left: auto;
     right: 12px;
   }
 
   // left
-  &[x-placement^="left"] {
+  &[x-placement^='left'] {
     padding-right: $offset;
     .c-tooltip-arrow {
       margin-top: -5px;
       top: 50%;
       right: -5px;
-      @include paintArrow("left", 5px);
+      @include paintArrow('left', 5px);
     }
   }
-  &[x-placement="left-start"] .c-tooltip-arrow {
+  &[x-placement='left-start'] .c-tooltip-arrow {
     top: 12px;
+    margin-top: 0px;
   }
-  &[x-placement="left-end"] .c-tooltip-arrow {
+  &[x-placement='left-end'] .c-tooltip-arrow {
+    top: auto;
     bottom: 12px;
+    margin-top: 0px;
   }
 
   // right
-  &[x-placement^="right"] {
-    padding-right: $offset;
+  &[x-placement^='right'] {
+    padding-left: $offset;
     .c-tooltip-arrow {
       margin-top: -5px;
       top: 50%;
       left: -5px;
-      @include paintArrow("right", 5px);
+      @include paintArrow('right', 5px);
     }
   }
-  &[x-placement="right-start"] .c-tooltip-arrow {
+  &[x-placement='right-start'] .c-tooltip-arrow {
+    margin-top: 0px;
     top: 12px;
   }
-  &[x-placement="right-end"] .c-tooltip-arrow {
+  &[x-placement='right-end'] .c-tooltip-arrow {
+    margin-top: 0px;
+    top: auto;
     bottom: 12px;
   }
 }
