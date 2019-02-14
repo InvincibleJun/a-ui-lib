@@ -1,0 +1,9 @@
+@import '../mixins/slide.scss';
+
+.c-notification-container{
+  position: fixed;
+}
+
+.c-notification-box {
+  border: 1px solid #ccc;
+}

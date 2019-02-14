@@ -11,33 +11,48 @@ export default {
   methods: {
     getRowClassName(index) {
       if (this.stripe) {
-        return index % 2 ? 'odd' : 'even'
+        return index % 2 ? 'odd' : 'even';
       } else {
-        return ''
+        return '';
       }
     }
   },
 
   render(h) {
-    const { body, colGroup, data, tableWidth } = this.store
-    console.log(tableWidth)
+    const { body, colGroup, data, tableWidth } = this.store;
+
     return (
-      <table style={`width: ${tableWidth}px`}>
-        <colgroup>{colGroup.map(val => <col width={val.width} />)}</colgroup>
+      <table style={`width: ${tableWidth}px`} class="c-table-body">
+        <colgroup>
+          {colGroup.map(val => (
+            <col width={val.width} />
+          ))}
+        </colgroup>
         <tbody>
           {data.map((l, index) => (
             <tr class={this.getRowClassName(index)}>
               {body.map(cell => {
+                if (cell.number) {
+                  return (
+                    <td>
+                      <div class="c-table-cell">{index + 1}</div>
+                    </td>
+                  );
+                }
                 if (cell.render) {
-                  return cell.render(h, cell)
+                  return <td>{cell.render(h, cell)}</td>;
                 } else {
-                  return <td>{l[cell.key]}</td>
+                  return (
+                    <td>
+                      <div class="c-table-cell">{l[cell.key]}</div>
+                    </td>
+                  );
                 }
               })}
             </tr>
           ))}
         </tbody>
       </table>
-    )
+    );
   }
-}
+};

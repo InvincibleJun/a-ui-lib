@@ -1,0 +1,11 @@
+.c-slide-enter-active,
+.c-slide-leave-active {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.c-slide-enter,
+.c-slide-leave-to {
+  // opacity: 0 !important;
+  opacity: 0;
+  transform: translate(100%);
+}

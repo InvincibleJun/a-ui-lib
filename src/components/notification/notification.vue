@@ -1,12 +1,14 @@
 <template>
-  <div class="c-message-container" :style="style">
+  <div class="c-notification-container" :style="style">
     <Card
       v-for="item in list"
       :key="item.uuid"
+      :uuid="item.uuid"
       :title="item.title"
       :render="item.render"
       :content="item.content"
       :duration="item.duration"
+      :auto-close="item.autoClose"
     />
   </div>
 </template>
@@ -51,8 +53,20 @@ export default {
         title: option.title,
         render: option.render,
         content: option.content,
-        duration: option.duration
+        duration: option.duration,
+        autoClose: option.autoClose
       });
+      return uuid;
+    },
+    remove(uuid) {
+      this.$children.forEach(v => {
+        v.uuid === uuid && v.reset();
+      
+      });
+      this.list = this.list.filter(v => v.uuid !== uuid);
+    },
+    destory() {
+      this.list = [];
     }
   }
 };

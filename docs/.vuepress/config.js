@@ -27,7 +27,8 @@ module.exports = {
         'Colorpicker',
         'Dropdown',
         'Tabs',
-        'Message'
+        'Notification',
+        'Table'
       ],
     }
     // sidebar

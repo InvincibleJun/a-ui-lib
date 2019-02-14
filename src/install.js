@@ -14,6 +14,7 @@ import TabsItem from './components/tabs-item/index';
 import Upload from './components/upload/index';
 import Col from './components/Col/index';
 import Row from './components/Row/index';
+import Notification from './components/Notification/index';
 
 // eslint-disable-next-line no-underscore-dangle
 let _Vue;
@@ -57,4 +58,6 @@ export default function install(Vue) {
 
   // eslint-disable-next-line no-param-reassign
   Vue.prototype.$LoadingBar = LoadingBar;
+
+  Vue.prototype.$Notice = Notification;
 }
