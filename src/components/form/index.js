@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import Schema from 'async-validator';
 import { isArray } from '@/utils/func';
-import events from '@/mixins/events';
+import events, { findChildren } from '@/mixins/events';
 
 Schema.warning = function() {};
 
@@ -52,7 +52,9 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    //
+  },
 
   watch: {
     models: {
@@ -116,36 +118,27 @@ export default {
           });
         });
       } catch (e) {
-        throw new Error(e)
+        throw new Error(e);
       }
     },
-    checkFeild(name, option) {
-      option = option || {
-        value: this.models[name],
-        rules: this.rules[name]
-      };
 
+    checkFeild(name) {
       const fields = {
         [name]: option.value
       };
-
-      return new Promise((resolve, reject) => {
-        try {
-          this.validator.validate(fields, (errors, fields) => {
-            if (errors) {
-              reject(errors, fields);
-            } else {
-              resolve();
-            }
-          });
-        } catch (e) {
-          reject(e);
+      findChildren(
+        component => {
+          return isFormItem(component) && name === component.prop;
+        },
+        component => {
+          component.checkFeild();
         }
-      });
+      );
     }
   },
 
   render(h) {
+    console.log(this);
     return (
       <form onSubmit={e => this.handlerSubmit(e)}>{this.$slots.default}</form>
     );

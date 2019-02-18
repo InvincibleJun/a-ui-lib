@@ -1,14 +1,14 @@
 /**
  * 遍历子组件
- * @param {object} component 组件 
- * @param {function} callback 调用方法 
+ * @param {object} component 组件
+ * @param {function} callback 调用方法
  */
-function findChildren(component, callback) {
+export const findChildren = function(component, callback) {
   component.$children.forEach(v => {
     v.$children && findChildren(v, callback);
     callback(v);
   });
-}
+};
 
 export default {
   methods: {
@@ -28,7 +28,7 @@ export default {
             component.$options._componentTag === componentCondition
           );
         };
-      // 传入回掉函数判断
+        // 传入回掉函数判断
       } else if (typeof componentCondition === 'function') {
         conditionFunc = component => {
           return componentCondition(component);

@@ -1,3 +1,4 @@
+import Schema from 'async-validator';
 import events from '@/mixins/events';
 import { isArray } from '@/utils/func';
 
@@ -23,6 +24,16 @@ export default {
     showMessage: {
       type: Boolean,
       default: true
+    },
+
+    rules: {
+      type: Array,
+      default: () => []
+    },
+
+    required: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -31,14 +42,19 @@ export default {
       isFormItem: true,
       isError: false,
       errorMsg: '',
-      blurRules: [],
-      changeRules: []
+      ruleRequired: false
     };
   },
 
   computed: {
+    isRequired() {
+      return this.required || this.ruleRequired;
+    },
+
     rule() {
-      return this.prop ? this.$parent.rules[this.prop] : null;
+      return this.prop
+        ? { [this.prop]: this.$parent.rules[this.prop].concat([this.rules]) }
+        : null;
     },
 
     labelStyle() {
@@ -50,7 +66,6 @@ export default {
         : {
             width: labelWidth + 'px'
           };
-      // return this.$parent.labelWidth;
     }
   },
 
@@ -58,9 +73,9 @@ export default {
     rule: {
       handler(nv) {
         if (nv) {
-          nv.forEach(r => {
-            const { trigger = 'blur' } = r;
-            this[`${trigger}Rules`].push(r);
+          nv[this.prop].forEach(r => {
+            const { required } = r;
+            if (required && !this.ruleRequired) this.ruleRequired = true;
           });
         }
       },
@@ -69,6 +84,28 @@ export default {
   },
 
   methods: {
+    checkFeild(rule) {
+      const fields = {
+        [this.prop]: this.$parent.models[this.prop]
+      };
+
+      const validator = new Schema(rule || this.rule);
+
+      return new Promise((resolve, reject) => {
+        try {
+          validator.validate(fields, (errors, fields) => {
+            if (errors) {
+              reject(errors, fields);
+            } else {
+              resolve();
+            }
+          });
+        } catch (e) {
+          reject(e);
+        }
+      });
+    },
+
     handlerError(err) {
       this.errorMsg = typeof err !== 'string' ? err.toString() : err;
       this.isError = true;
@@ -80,17 +117,15 @@ export default {
     },
 
     handler(type, value) {
-      const asyncValidators = this[`${type}Rules`].map(rule => {
-        return this.dispatch('c-form', 'checkFeild', this.prop, {
-          value,
-          rule
-        });
-      });
-      //
-      Promise.all(asyncValidators)
+      const asyncValidators = this.rules[this.prop].filters(
+        ({ trigger = 'blur' }) => v.trigger === type
+      );
+
+      this.checkFeild({
+        [this.prop]: asyncValidators
+      })
         .then(() => {
           this.handlerVaildate();
-          // console.log(arg)
         })
         .catch(err => {
           err = isArray(err) ? err[0] : err;
@@ -102,7 +137,12 @@ export default {
   render(h) {
     return (
       <div>
-        {this.label && <label style={labelStyle}>{this.label}</label>}
+        {this.label && (
+          <label style={this.labelStyle}>
+            {this.isRequired && '*'}
+            {this.label}
+          </label>
+        )}
         {this.$slots.default}
         {this.showMessage && this.isError && <div>{this.errorMsg}</div>}
       </div>
