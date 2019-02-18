@@ -1,16 +1,62 @@
+@import './mixins';
+
 $namespace: c-tabs;
+
 $active-color: #2d8cf0;
 
-.#{$namespace}-wrapper {
+.#{$namespace} {
   font-size: 0;
 }
 
-.#{$namespace}-nav {
-  padding-bottom: 10px;
+.#{$namespace}-wrapper {
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid #dcdee2;
+  position: relative;
+  // & > .#{$namespace}-card:last-child {
+  //   border-right: 1px solid #dcdee2;
+  // }
+
+  &.#{$namespace}-scroll-active {
+    padding: 0 20px;
+  }
+
+  .#{$namespace}-left {
+    position: absolute;
+    top: 0;    
+    left: 0;
+    font-size: 16px;
+  }
+
+  .#{$namespace}-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 16px;
+  }
+}
+
+.#{$namespace}-main {
+  overflow: hidden;
+  position: relative;
+}
+
+@include clearfix('.#{$namespace}-main');
+
+.#{$namespace}-scroll {
+  white-space: nowrap;
+  float: left;
+  width: auto;
+  transition: transform .3s ease-in-out;
+  &.#{$namespace}-scroll-active {
+    padding: 0 20px;
+  }
 }
 
 .#{$namespace}-label {
   display: inline-block;
+  font-size: 0;
   text-align: center;
   padding: 10px 20px;
   color: #333333;
@@ -47,13 +93,13 @@ $active-color: #2d8cf0;
 }
 
 .#{$namespace}-card {
-  border-radius: 4px 4px 0 0;
+  box-sizing: border-box;
   background-color: #f8f8f9;
-  border: 1px solid #dcdee2;
-  margin: 0 4px;
-  border-bottom: 0px;
   padding: 5px 20px;
   text-align: center;
+  border: 1px solid #dcdee2;
+  border-right: 0px;
+  border-bottom: 1px solid transparent;
   &.#{$namespace}-active {
     color: $active-color;
     background-color: #fff;

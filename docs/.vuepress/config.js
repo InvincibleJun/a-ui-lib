@@ -28,7 +28,10 @@ module.exports = {
         'Dropdown',
         'Tabs',
         'Notification',
-        'Table'
+        'Table',
+        'Page',
+        'Input',
+        'Form'
       ],
     }
     // sidebar

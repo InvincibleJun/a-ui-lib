@@ -11,11 +11,3 @@
     display: table;
   }
 }
-
-
-.a::before,
-.a::after {
-  clear: both;
-  content: '';
-  display: table;
-}

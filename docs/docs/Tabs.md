@@ -1,6 +1,10 @@
 # Tabs 标签页
 
-### example
+## 示例
+
+<hr/>
+
+<tabs-index />
 
 ```
     <c-tabs v-model="value">
@@ -16,12 +20,13 @@
 
 #### tabs
 
-| key      | type          | enum      | requried | default | desc                      |
-| -------- | ------------- | --------- | -------- | ------- | ------------------------- |
-| value    | String/Number | -         | false    | -       | 绑定 valude，支持 v-model |
-| position | String        | top       | false    | top     | 位置                      |
-| type     | String        | card/line | false    | line    | 标签页样式                |
-| animated | Boolean       | -         | false    | true    | 是否支持动画              |
+| key       | type          | enum      | requried | default | desc                          |
+| --------- | ------------- | --------- | -------- | ------- | ----------------------------- |
+| value     | String/Number | -         | false    | -       | 绑定 valude，支持 v-model     |
+| position  | String        | top       | false    | top     | 位置                          |
+| type      | String        | card/line | false    | line    | 标签页样式                    |
+| animated  | Boolean       | -         | false    | true    | 是否支持动画                  |
+| lineStart | Boolean       | -         | false    | false   | line 模式初始化时是否启用动画 |
 
 #### tabs-item
 

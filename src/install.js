@@ -12,17 +12,19 @@ import Datepicker from './components/datepicker/index';
 import Tabs from './components/tabs/index';
 import TabsItem from './components/tabs-item/index';
 import Upload from './components/upload/index';
-import Col from './components/Col/index';
-import Row from './components/Row/index';
-import Notification from './components/Notification/index';
+import Col from './components/col/index';
+import Row from './components/row/index';
+import Page from './components/page/index';
+import Input from './components/input/index';
+import Notification from './components/notification/index';
+import Form from './components/form/index';
+import FormItem from './components/form-item/index';
 
 // eslint-disable-next-line no-underscore-dangle
 let _Vue;
 
 export default function install(Vue) {
-  if (_Vue) {
-    return;
-  }
+  if (_Vue) return;
 
   _Vue = Vue;
 
@@ -55,6 +57,12 @@ export default function install(Vue) {
   Vue.component(Row.name, Row);
 
   Vue.component(Col.name, Col);
+
+  Vue.component(Page.name, Page);
+
+  Vue.component(Input.name, Input);
+
+  Vue.component(FormItem.name, FormItem);
 
   // eslint-disable-next-line no-param-reassign
   Vue.prototype.$LoadingBar = LoadingBar;

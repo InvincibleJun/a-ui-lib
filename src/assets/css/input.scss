@@ -1,3 +1,4 @@
+$error-color: red;
 
 .c-input {
   -webkit-appearance: none;
@@ -15,11 +16,12 @@
   padding: 0 15px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   width: 100%;
-}
-
-.c-input:focus {
-  outline: none;
-  border-color: #409eff;
+  &.c-input-error {
+    border-color: $error-color !important;
+  }
+  &:focus {
+    border-color: #409eff;
+  }
 }
 
 .c-input-disabled {

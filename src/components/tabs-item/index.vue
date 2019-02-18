@@ -29,7 +29,7 @@ export default {
 
   computed: {
     show() {
-      return this.$parent.active === this.index;
+      return this.$parent.value === this.label;
     },
 
     index() {
