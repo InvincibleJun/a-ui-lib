@@ -5,6 +5,7 @@
       @input="handlerInput"
       @change="handlerChange"
       @blur="handlerBlur"
+      :value="currentVal"
       :readonly="readonly"
       :class="className"
       :disabled="disabled"
@@ -72,7 +73,6 @@ export default {
 
       this.setValue(value);
       this.$emit("input", value);
-      // this.$parent.handler("input", value);
     },
 
     handlerChange(e) {
@@ -81,7 +81,6 @@ export default {
       this.$emit("change", value);
 
       this.dispatch("c-form-item", "handler", "change", value);
-      // this.$parent.handler("change", value);
     },
 
     handlerBlur(e) {
@@ -99,6 +98,11 @@ export default {
     handlerFocus() {
       this.$parent.handler("change", value);
       //
+    },
+
+    reset(value) {
+      this.error = false;
+      this.setValue(value);
     },
 
     setValue(value) {

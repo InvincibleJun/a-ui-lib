@@ -4,10 +4,11 @@
  * @param {function} callback 调用方法
  */
 export const findChildren = function(component, callback) {
-  component.$children.forEach(v => {
-    v.$children && findChildren(v, callback);
-    callback(v);
-  });
+  component.$children &&
+    component.$children.forEach(v => {
+      v.$children && findChildren(v, callback);
+      callback(v);
+    });
 };
 
 export default {
@@ -20,6 +21,7 @@ export default {
      */
     broadcast(componentCondition, hanlderName, ...args) {
       let conditionFunc;
+      let results = [];
       // 组件名判断
       if (typeof componentCondition === 'string') {
         conditionFunc = component => {
@@ -43,9 +45,11 @@ export default {
           component[hanlderName] &&
           typeof component[hanlderName] === 'function'
         ) {
-          component[hanlderName].apply(component, args);
+          results.push(component[hanlderName].apply(component, args));
         }
       });
+
+      return results;
     },
 
     /**

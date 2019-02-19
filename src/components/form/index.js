@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import Schema from 'async-validator';
 import { isArray } from '@/utils/func';
-import events, { findChildren } from '@/mixins/events';
+import events from '@/mixins/events';
 
 Schema.warning = function() {};
 
@@ -52,10 +52,6 @@ export default {
     };
   },
 
-  created() {
-    //
-  },
-
   watch: {
     models: {
       handler(nv, ov) {
@@ -65,80 +61,60 @@ export default {
         }
       },
       immediate: true
-    },
-    rules: {
-      handler(nv) {
-        if (nv) {
-          this.validator = new Schema(this.rules);
-        }
-      },
-      immediate: true
     }
   },
 
   methods: {
-    handlerReset(fields) {
-      if (isArray(fields)) {
-        fields.forEach(field => {
-          this.handlerReset(field);
-        });
-      } else if (typeof fields === 'string') {
-        this.models[fields] &&
-          (this.models[fields] = cloneDeep(this.originForm)[fields]);
-      } else {
-        this.models = cloneDeep(this.originForm);
-      }
-    },
-
     handlerSubmit(e) {
       e.preventDefault();
       return false;
     },
 
-    checkAllFeilds() {
-      try {
-        this.validator.validate(this.models, (errors, fields) => {
-          if (errors) {
-            console.log(errors);
-          }
-          Object.keys(this.models).forEach(key => {
-            if (fields.indexOf(key) !== -1) {
-              this.broadcast(
-                component => {
-                  return component.data;
-                },
-                'handlerError',
-                errors[0]
-              );
-            } else {
-              this.broadcast(component => {
-                return component.data;
-              }, 'handlerVaildate');
-            }
-          });
+    resetFeilds(fields) {
+      if (isArray(fields)) {
+        fields.forEach(field => {
+          this.resetFeilds(field);
         });
-      } catch (e) {
-        throw new Error(e);
+      } else if (typeof fields === 'string') {
+        this.broadcast(component => {
+          return isFormItem(component) && component.prop === fields;
+        }, 'resetFeild');
+      } else {
+        this.broadcast(isFormItem, 'resetFeild');
       }
     },
 
-    checkFeild(name) {
-      const fields = {
-        [name]: option.value
-      };
-      findChildren(
-        component => {
-          return isFormItem(component) && name === component.prop;
-        },
-        component => {
-          component.checkFeild();
-        }
-      );
+    checkFeilds(fields, callback = () => {}) {
+      // 默认参数交换
+      if (typeof fields === 'function') {
+        callback = fields;
+        fields = null;
+      }
+
+      if (isArray(fields)) {
+        fields.forEach(field => {
+          this.checkFeilds(field);
+        });
+      } else if (typeof fields === 'string') {
+        this.broadcast(
+          component => {
+            return isFormItem(component) && component.prop === fields;
+          },
+          'handler',
+          'all'
+        ).then(error => {
+          callback(error || null);
+        });
+      } else {
+        Promise.all(this.broadcast(isFormItem, 'handler', 'all')).then(arg => {
+          const errors = arg.filter(v => v);
+          callback(errors.length ? errors : null);
+        });
+      }
     }
   },
 
   render(h) {
-    console.log(this);
     return (
       <form onSubmit={e => this.handlerSubmit(e)}>{this.$slots.default}</form>
     );

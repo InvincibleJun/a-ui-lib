@@ -1,10 +1,15 @@
 <template>
   <div>
-    <c-form :models="form" :rules="rules">
+    <c-form :models="form" :rules="rules" ref="form">
       <c-form-item label="姓名" prop="value">
         <c-input v-model="form.value"/>
       </c-form-item>
+      <c-form-item label="爱好" prop="hoby">
+        <c-input v-model="form.hoby"/>
+      </c-form-item>
     </c-form>
+    <button @click="reset">重置</button>
+    <button @click="validate">校验</button>
   </div>
 </template>
 
@@ -23,18 +28,40 @@ export default {
   data() {
     return {
       form: {
-        value: ""
+        value: "",
+        hoby: ""
       },
       rules: {
         value: [
           {
             pattern: /\d{1,5}/g,
-            // trigger: 'change',
-            message: "error3"
+            trigger: "change",
+            message: "错了"
+          },
+          {
+            pattern: /\d{1,2}/g,
+            trigger: "change",
+            message: "错了aa"
+          }
+        ],
+        hoby: [
+          {
+            required: true,
+            message: "必填"
           }
         ]
       }
     };
+  },
+  methods: {
+    reset() {
+      this.$refs.form.resetFeilds("value");
+    },
+    validate() {
+      this.$refs.form.checkFeilds(err => {
+        console.log(err);
+      });
+    }
   }
   //
 };

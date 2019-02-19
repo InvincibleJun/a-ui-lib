@@ -51,9 +51,17 @@ export default {
       return this.required || this.ruleRequired;
     },
 
+    // needCheck() {
+    //   // this.rules ?
+    // },
+
     rule() {
       return this.prop
-        ? { [this.prop]: this.$parent.rules[this.prop].concat([this.rules]) }
+        ? {
+            [this.prop]: (this.$parent.rules[this.prop] || []).concat(
+              this.rules
+            )
+          }
         : null;
     },
 
@@ -84,6 +92,17 @@ export default {
   },
 
   methods: {
+    resetFeild(value) {
+      this.broadcast(
+        isFormItemChildren,
+        'reset',
+        this.$parent.originForm[this.prop]
+      );
+
+      this.errorMsg = '';
+      this.isError = false;
+    },
+
     checkFeild(rule) {
       const fields = {
         [this.prop]: this.$parent.models[this.prop]
@@ -116,21 +135,29 @@ export default {
       this.broadcast(isFormItemChildren, 'handlerVaildate');
     },
 
-    handler(type, value) {
-      const asyncValidators = this.rules[this.prop].filters(
-        ({ trigger = 'blur' }) => v.trigger === type
+    handler(type) {
+      // 无匹配规则
+      if (!this.rule) return;
+
+      const asyncValidators = this.rule[this.prop].filter(
+        ({ trigger = 'blur' }) => type === 'all' || trigger === type
       );
 
-      this.checkFeild({
-        [this.prop]: asyncValidators
-      })
-        .then(() => {
-          this.handlerVaildate();
+      if (!asyncValidators.length) return;
+      return new Promise((resolve, reject) => {
+        this.checkFeild({
+          [this.prop]: asyncValidators
         })
-        .catch(err => {
-          err = isArray(err) ? err[0] : err;
-          this.handlerError(err.message);
-        });
+          .then(() => {
+            this.handlerVaildate();
+            resolve();
+          })
+          .catch(err => {
+            resolve(err);
+            err = isArray(err) ? err[0] : err;
+            this.handlerError(err.message);
+          });
+      });
     }
   },
 
