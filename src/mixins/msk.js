@@ -1,20 +1,22 @@
-import {
-  addClass, removeClass
-} from '../utils/dom';
+/**
+ * 背景分离
+ */
+import { addClass, removeClass } from '../utils/dom';
 
 let queue = [];
-
 let coverDom;
 
 const d = document;
+const body = document.body;
 
+// 获得滚动条宽度
 const width = (function() {
   const oP = document.createElement('p'),
-        styles = {
-          width: '100px',
-          height: '100px',
-          overflowY: 'scroll'
-        };
+    styles = {
+      width: '100px',
+      height: '100px',
+      overflowY: 'scroll'
+    };
 
   for (const i in styles) {
     if (Object.prototype.hasOwnProperty.call(styles, i)) {
@@ -33,7 +35,10 @@ let coverIndex;
 
 export default {
   data() {
-    return {};
+    return {
+      overflow: '',
+      paddingRight: ''
+    };
   },
   watch: {
     visible(val) {
@@ -45,10 +50,15 @@ export default {
     }
   },
   methods: {
+    // 开启遮罩层
     openCover() {
-      if (this.bodyNoScroll) {
+
+      if (this.noScroll) {
+        this.overflow = body.style.overflow;
+        this.paddingRight = body.style.overflow;
+
         d.body.style.overflow = 'hidden';
-        d.body.style.paddingRight = `${ width }px`;
+        d.body.style.paddingRight = `${width}px`;
       }
 
       index += 2;
@@ -58,6 +68,7 @@ export default {
         this.$el.style.zIndex = index;
         queue.push(index);
       });
+
       if (!coverDom) {
         coverDom = d.createElement('div');
         coverIndex = index - 1;
@@ -72,6 +83,8 @@ export default {
         coverDom.style.zIndex = coverIndex + 2;
       }
     },
+
+    // 关闭遮罩层
     closeCover() {
       const match = this.$el.getAttribute('style').match(/(\d+)/);
 
@@ -85,8 +98,9 @@ export default {
             coverDom.style.display = 'none';
             d.body.removeChild(coverDom);
             coverDom = null;
-            if (this.bodyNoScroll) {
-              d.body.style = '';
+            if (this.noScroll) {
+              d.body.style.overflow = this.overflow;
+              d.body.style.paddingRight = this.paddingRight;
             }
           }, 500);
         } else {

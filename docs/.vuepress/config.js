@@ -31,7 +31,9 @@ module.exports = {
         'Table',
         'Page',
         'Input',
-        'Form'
+        'Form',
+        'Affix',
+        'Modal'
       ],
     }
     // sidebar

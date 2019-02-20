@@ -1,38 +1,56 @@
 <template>
-  <Transition name="modal-fade">
-    <div
-      class="c-modal-wrapper"
-      v-if="visible"
-      @click.self="close"
-      :style="style"
-    >
+  <transition name="modal-fade">
+    <div class="c-modal-wrapper" v-if="visible" @click.self="close" :style="style">
       <div class="c-modal">
-        <slot name="head">
-          <span>12312</span>
-        </slot>
-        <slot name="body" />
+        <div class="c-modal-title" v-if="$slots.head">
+          <slot name="head"></slot>
+        </div>
+        <div class="c-modal-title" v-else-if="title">
+          <span class="c-modal-title">{{title}}</span>
+        </div>
+
+        <slot></slot>
         <div v-if="$slots.footer">
-          <slot name="footer" />
+          <slot name="footer"></slot>
+        </div>
+        <div v-else>
+          <button @click="handlerClickOk">{{okText}}</button>
+          <button @click="handlerClickCancel">{{cancelText}}</button>
         </div>
       </div>
     </div>
-  </Transition>
+  </transition>
 </template>
 
 <script>
-import msk from '../../mixins/msk';
+import msk from "../../mixins/msk";
 
 export default {
   mixins: [msk],
   props: {
-    visible: {
-      type: Boolean,
-      default: false
+    value: {
+      type: Boolean
     },
-    bodyNoScroll: {
+    title: {
+      type: String
+    },
+    noScroll: {
       type: Boolean,
       default: true
+    },
+    okText: {
+      type: String,
+      default: "确定"
+    },
+    cancelText: {
+      type: String,
+      default: "取消"
     }
+  },
+  data() {
+    return {
+      visible: false
+    };
   },
   computed: {
     style() {
@@ -42,13 +60,38 @@ export default {
   mounted() {
     document.body.appendChild(this.$el);
   },
+
   methods: {
     close() {
-      this.$emit('update:visible', false);
+      this.visible = false;
+      this.$emit("input", false);
+    },
+    handlerClickOk(e) {
+      this.visible = false;
+      this.$emit("on-ok", e);
+    },
+    handlerClickCancel(e) {
+      this.visible = false;
+      this.$emit("on-cancel", e);
     }
+  },
+
+  watch: {
+    value: {
+      handler(nv) {
+        this.visible = nv;
+        if (nv) {
+          this.$emit("on-open");
+        } else {
+          this.$emit("on-close");
+        }
+      }
+    }
+    // visible(nv) {
+    //   // nv ? this.open() : this.close();
+    // }
   }
 };
-
 </script>
 
 <style>
@@ -98,5 +141,43 @@ export default {
   bottom: 0;
   left: 0;
   overflow: auto;
+}
+
+.c-model-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+.c-model-cover-to {
+  opacity: 0;
+}
+
+.c-model-cover-show {
+  transition: opacity 0.5s;
+}
+
+.c-model-cover-in {
+  animation: model-cover-in 0.5s;
+}
+
+.c-model-cover-out {
+  animation: model-cover-out 0.5s forwards;
+}
+
+@keyframes model-cover-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+@keyframes model-cover-out {
+  100% {
+    opacity: 0;
+  }
 }
 </style>
