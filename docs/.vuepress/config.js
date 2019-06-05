@@ -4,14 +4,13 @@ module.exports = {
   host: 'localhost',
   title: 'DOCS',
   home: false,
-  description: '一套文档系统',
+  description: 'a-ui-lib',
   configureWebpack: (config, isServer) => {
     config.resolve.alias['@'] =  path.join(__dirname, '../../src')
   },
   themeConfig: {
     nav: [
       { text: '文档', link: '/docs/' },
-      { text: '其他', link: '/aaa/' },
     ],
     sidebar: {
       '/docs/': [
@@ -36,23 +35,5 @@ module.exports = {
         'Modal'
       ],
     }
-    // sidebar
-    //  {
-    //   '/api/': [
-    //     '',  
-    //     {
-    //       title: 'Group 1',
-    //       collapsable: false,
-    //       children: [
-    //           'a'
-    //         ]
-    //       }
-    //   ],
-    //   '/docs/': [
-    //     '',
-    //     'a'
-    //   ],
-    //   '/': '',   
-    // }
   }
 }
